@@ -1,0 +1,11 @@
+.: Empty square
+X: Hostile empty square
+
+B: Black pawn
+b: Black on hostile square
+
+W: White pawn
+w: White on hostile square
+
+K: King
+k: King on hostile square
