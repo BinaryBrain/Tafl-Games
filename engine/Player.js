@@ -4,14 +4,22 @@ function Player(id, name) {
 }
 
 Player.prototype.play(cb) {
+	console.log("Player "+this.id+" have to play.")
 	var moved = false
 	while(!moved) {
-		// Player choose a pawn
-		// Player move it to a dest
-		if(pawn.isAlive && pawn.move(dest))
-			moved = true
+		this.waitForChoice(function(pawn, dest) {
+			if(pawn.isAlive && pawn.move(dest))
+				moved = true
+		})
 	}
-
-	// callback
+	
 	cb()
+}
+
+Player.prototype.waitForChoice(cb) {
+	console.log("Waiting for the choice of player "+this.id+"...")
+	// Player choose a pawn
+	// Player move it to a dest
+	// Network.blah
+	cb(pawn, dest)
 }
