@@ -1,0 +1,39 @@
+<html>
+  <head>
+	<meta charset="UTF-8">
+    <title>Canvas</title>
+    <script type="text/javascript">
+	
+		function draw() {
+			var ctx = document.getElementById('canvas').getContext('2d');
+			var img = new Image();
+			
+			var nRow = 11,
+				nCol = 11;
+				
+			img.src = 'resources/square.png';
+			
+			var totWidth = document.getElementById('canvas').width,
+				totHeight = document.getElementById('canvas').height;
+				
+			var iWidth = img.width,
+				iHeight = img.heigth;
+				
+			img.onload = function(){
+			  for (i = 0; i < nCol; i++){
+				for (j = 0; j < nRow; j++){
+				  ctx.drawImage(img, j*(totWidth/nCol), i*(totHeight/nRow), (totWidth/nCol), (totHeight/nRow));
+				}
+			  }
+			}
+		}
+    </script>
+    <style type="text/css">
+      canvas { border: 1px solid black; }
+    </style>
+	
+  </head>
+  <body onload="draw()">
+    <canvas id="canvas" width="500" height="500"></canvas>
+  </body>
+</html>
