@@ -2,64 +2,11 @@
   <head>
 	<meta charset="UTF-8">
     <title>Canvas</title>
-    <script type="text/javascript">
-	
-		function draw() {
-			var ctx = document.getElementById('canvas').getContext('2d');
-			var img = new Image();
-			
-			//The number of rows and columns in the game.
-			var nRow = 11,
-				nCol = 11;
-				
-			// square.png for the squares, board.png for the board.
-			img.src = '../resources/board.png';
-			
-			var totWidth = document.getElementById('canvas').width,
-				totHeight = document.getElementById('canvas').height;
-				
-			var iWidth = img.width,
-				iHeight = img.heigth;
-				
-			// Background by squares
-			/*img.onload = function(){
-			  for (i = 0; i < nCol; i++){
-				for (j = 0; j < nRow; j++){
-				  ctx.drawImage(img, j*(totWidth/nCol), i*(totHeight/nRow), (totWidth/nCol), (totHeight/nRow));
-				}
-			  }
-			}*/
-			
-			// Background in only one image
-			img.onload = function(){
-				ctx.drawImage(img, 0, 0, totWidth, totHeight);
-			  
-				for(i = 0; i<nCol; i++){
-					
-					// draw the vertical lines
-					ctx.beginPath();
-					ctx.moveTo(i*(totWidth/nCol), 0);
-					ctx.lineTo(i*(totWidth/nCol), totHeight);
-					ctx.stroke();
-
-					// draw the horizontal lines
-					ctx.beginPath();
-					ctx.moveTo(0, i*(totHeight/nRow));
-					ctx.lineTo(totWidth, i*(totHeight/nRow));
-					ctx.stroke();
-
-				}
-
-			}
-		}
-		
-    </script>
-    <style type="text/css">
-      canvas { border: 1px solid black; }
-    </style>
+    <script type="text/javascript" src="canvas.js"></script>
+    <style type="text/css" src="sytle.css"></style>
 	
   </head>
-  <body onload="draw()">
+  <body onload="init()">
     <canvas id="canvas" width="500" height="500"></canvas>
   </body>
 </html>
