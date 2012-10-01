@@ -4,6 +4,7 @@ var canWidth, canHeight;
 
 var board;
 var bPawn, wPawn, kPawn;
+
 		
 // load the images and set the basic variables
 function init(){
@@ -65,15 +66,13 @@ function drawPawns(){
 	TODO : load correctly a map at the beginning, fill the tab with the positions on the map. Then when 
 	differents events append, fill the tab with te actual position of the pawns and then redraw.*/ 
 	
-	var map = new Array();
-	for(var i =0; i< nCol; i++){
-		map[i] = new Array();
-	}
+	var maps = new Maps("hnefatafl",nCol);	
+	var map = maps.getMap();
 	
 	
 	for(i = 0; i< nRow; i++){
 		for(j = 0; j<nCol; j++){
-			drawPawnsType(i,j,'B');
+			drawPawnsType(i,j, map[i][j]);
 		}
 	}
 }
