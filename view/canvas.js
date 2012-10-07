@@ -1,9 +1,12 @@
 var ctx;
-var nRow = 11, nCol = 11;
 var canWidth, canHeight;
 
 var board;
 var bPawn, wPawn, kPawn;
+
+var map;
+var nRow = 11, nCol = 11;
+var mapName = "hnefatafl";
 
 		
 // load the images and set the basic variables
@@ -21,6 +24,7 @@ function init(){
 	kPawn = new Image();
 	kPawn.src = '../resources/kPawn.png';
 	
+	map = new Maps(mapName,nRow,nCol).getMap();
 	
 	draw();
 	
@@ -41,7 +45,11 @@ function drawBackground(){
 	
 		ctx.drawImage(board, 0, 0, canWidth, canHeight);
 	  
-		for(i = 0; i<nCol; i++){
+		var bigger;
+		if(nCol > nRow) bigger = nCol;
+		else bigger = nRow;
+		
+		for(i = 0; i<bigger; i++){
 			
 			// draw the vertical lines
 			ctx.beginPath();
@@ -59,39 +67,26 @@ function drawBackground(){
 	
 }
 
-// draw the pawns
+// draw the pawns by type
 function drawPawns(){
-	
-	/*In test.
-	TODO : load correctly a map at the beginning, fill the tab with the positions on the map. Then when 
-	differents events append, fill the tab with te actual position of the pawns and then redraw.*/ 
-	
-	var maps = new Maps("hnefatafl",nCol);	
-	var map = maps.getMap();
-	
 	
 	for(i = 0; i< nRow; i++){
 		for(j = 0; j<nCol; j++){
-			drawPawnsType(i,j, map[i][j]);
+			switch(map[i][j]){
+				case 'B':
+					ctx.drawImage(bPawn, i*(canWidth/nCol), j*(canHeight/nRow), (canWidth/nCol), (canHeight/nRow));
+					break;
+				case 'W':
+					ctx.drawImage(wPawn, i*(canWidth/nCol), j*(canHeight/nRow), (canWidth/nCol), (canHeight/nRow));
+					break;
+				case 'k':
+					ctx.drawImage(kPawn, i*(canWidth/nCol), j*(canHeight/nRow), (canWidth/nCol), (canHeight/nRow));
+					break;
+				case '.':
+					break;
+				default:
+					break;
+			}
 		}
-	}
-}
-
-// draw the pawns with 
-function drawPawnsType(i,j,s){
-	switch(s){
-		case 'B':
-			ctx.drawImage(bPawn, i*(canWidth/nCol), j*(canHeight/nRow), (canWidth/nCol), (canHeight/nRow));
-			break;
-		case 'W':
-			ctx.drawImage(wPawn, i*(canWidth/nCol), j*(canHeight/nRow), (canWidth/nCol), (canHeight/nRow));
-			break;
-		case 'k':
-			ctx.drawImage(kPawn, i*(canWidth/nCol), j*(canHeight/nRow), (canWidth/nCol), (canHeight/nRow));
-			break;
-		case '.':
-			break;
-		default:
-			break;
 	}
 }
