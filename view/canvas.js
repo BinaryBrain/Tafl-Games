@@ -5,7 +5,7 @@ var board;
 var bPawn, wPawn, kPawn;
 
 var map;
-var nRow = 11, nCol = 11;
+var nRow = 13, nCol = 13;
 var mapName = "tablut";
 
 		
