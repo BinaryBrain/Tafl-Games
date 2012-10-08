@@ -1,63 +1,67 @@
 var map;
 
 function Maps(name, nRow, nCol){
-	
-	map = createArray(nRow);
-	var midLineHor = (nRow - 1)/2;
+	var bigger;
+	if(nCol > nRow) bigger = nCol;
+	else bigger = nRow;
+		
+	map = createArray(bigger);
+	var midLineHor = (nRow - 1)/2; 
 	var midLineVer = (nCol - 1)/2;
-	
-	map[midLineHor][midLineVer] = 'k';
+
+	map[midLineVer][midLineHor] = 'k';
 	
 	if(name == "hnefatafl"){
-		//sets the white pawns
+		//the 5 white pawns on each side
 		for(i = 0; i < 5; i++){
-			map[0][midLineVer - 2 + i] = 'W';
-			map[nRow-1][midLineVer - 2 + i] = 'W';
-			map[midLineHor -2 + i][0] = 'W';
-			map[midLineHor -2 + i][nCol-1] = 'W';
+			map[midLineVer - 2 + i][0] = 'W'; //top
+			map[midLineVer - 2 + i][nRow-1] = 'W'; //bot
+			map[0][midLineHor -2 + i] = 'W'; //left
+			map[nCol-1][midLineHor -2 + i] = 'W'; //right
 		}
+		// the remaining white one with them
+		map[midLineVer][1] = 'W';
+		map[midLineVer][nRow-2] = 'W';
+		map[1][midLineHor] = 'W';
+		map[nCol-2][midLineHor] = 'W';
 		
-		map[1][midLineVer] = 'W';
-		map[nRow-2][midLineVer] = 'W';
-		map[midLineHor][1] = 'W';
-		map[midLineHor][nCol-2] = 'W';
 		
-		// sets the black pawns
+		// the black pawns in 2 lines wich intersect at the king
 		for(i =-2; i < 3; i++){
 			if(i != 0){
-				map[midLineHor + i][midLineVer] = 'B';
-				map[midLineHor][midLineVer +i] = 'B';
+				map[midLineVer][midLineHor + i] = 'B';
+				map[midLineVer +i][midLineHor] = 'B';
 			}
 		}
-		
+		// the remaining black ones next to them.
 		for(i = -1; i < 2; i++){
 			if(i != 0){
-				map[midLineHor - i][midLineHor -i] = 'B';
-				map[midLineHor + i][midLineHor -i] = 'B';
+				map[midLineVer + i][midLineHor -1] = 'B';
+				map[midLineVer + i][midLineHor +1] = 'B';
 			}
 		}
 		
 	}
 	
 	else if(name == "tablut"){
-		//sets the white pawns
+		//the 3 white pawns on each side
 		for(i = 0; i < 3; i++){
-			map[0][midLineVer - 1 + i] = 'W';
-			map[nRow-1][midLineVer - 1 + i] = 'W';
-			map[midLineHor -1 + i][0] = 'W';
-			map[midLineHor -1 + i][nCol-1] = 'W';
+			map[midLineVer - 1 + i][0] = 'W'; //top
+			map[midLineVer - 1 + i][nRow-1] = 'W'; //bot
+			map[0][midLineHor -1 + i] = 'W'; //left
+			map[nCol-1][midLineHor -1 + i] = 'W'; //right
 		}
+		// the remaining white one with them
+		map[midLineVer][1] = 'W';
+		map[midLineVer][nRow-2] = 'W';
+		map[1][midLineHor] = 'W';
+		map[nCol-2][midLineHor] = 'W';
 		
-		map[1][midLineVer] = 'W';
-		map[nRow-2][midLineVer] = 'W';
-		map[midLineHor][1] = 'W';
-		map[midLineHor][nCol-2] = 'W';
-		
-		// sets the black pawns
+		// the black pawns in 2 lines wich intersect at the king
 		for(i =-2; i < 3; i++){
 			if(i != 0){
-				map[midLineHor + i][midLineVer] = 'B';
-				map[midLineHor][midLineVer +i] = 'B';
+				map[midLineVer][midLineHor + i] = 'B';
+				map[midLineVer +i][midLineHor] = 'B';
 			}
 		}
 		
@@ -69,9 +73,9 @@ Maps.prototype.getMap = function(){
 	return map;
 }
 
-function createArray(nRow){
+function createArray(n){
 	var array = new Array();
-	for(i = 0; i < nRow; i++){
+	for(i = 0; i < n; i++){
 		array[i] = new Array();
 	}
 	

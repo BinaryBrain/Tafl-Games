@@ -6,7 +6,7 @@ var bPawn, wPawn, kPawn;
 
 var map;
 var nRow = 11, nCol = 11;
-var mapName = "hnefatafl";
+var mapName = "tablut";
 
 		
 // load the images and set the basic variables
@@ -70,8 +70,8 @@ function drawBackground(){
 // draw the pawns by type
 function drawPawns(){
 	
-	for(i = 0; i< nRow; i++){
-		for(j = 0; j<nCol; j++){
+	for(i = 0; i< nCol; i++){
+		for(j = 0; j<nRow; j++){
 			switch(map[i][j]){
 				case 'B':
 					ctx.drawImage(bPawn, i*(canWidth/nCol), j*(canHeight/nRow), (canWidth/nCol), (canHeight/nRow));
