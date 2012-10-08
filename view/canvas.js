@@ -5,8 +5,8 @@ var board;
 var bPawn, wPawn, kPawn;
 
 var map;
-var nRow = 13, nCol = 13;
-var mapName = "tablut";
+var nRow = 7, nCol = 7;
+var mapName = "ard-ri";
 
 		
 // load the images and set the basic variables
@@ -49,7 +49,7 @@ function drawBackground(){
 		if(nCol > nRow) bigger = nCol;
 		else bigger = nRow;
 		
-		for(i = 0; i<bigger; i++){
+		for(var i = 0; i<bigger; i++){
 			
 			// draw the vertical lines
 			ctx.beginPath();
@@ -70,8 +70,8 @@ function drawBackground(){
 // draw the pawns by type
 function drawPawns(){
 	
-	for(i = 0; i< nCol; i++){
-		for(j = 0; j<nRow; j++){
+	for(var i = 0; i< nCol; i++){
+		for(var j = 0; j<nRow; j++){
 			switch(map[i][j]){
 				case 'B':
 					ctx.drawImage(bPawn, i*(canWidth/nCol), j*(canHeight/nRow), (canWidth/nCol), (canHeight/nRow));

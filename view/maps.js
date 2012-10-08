@@ -1,81 +1,98 @@
-var map;
 
 function Maps(name, nRow, nCol){
 	var bigger;
 	if(nCol > nRow) bigger = nCol;
 	else bigger = nRow;
 		
-	map = createArray(bigger);
-	var midLineHor = (nRow - 1)/2; 
-	var midLineVer = (nCol - 1)/2;
+	this.map = createArray(bigger);
+	this.midLineHor = (nRow - 1)/2; 
+	this.midLineVer = (nCol - 1)/2;
 
-	map[midLineVer][midLineHor] = 'k';
+	this.map[this.midLineVer][this.midLineHor] = 'k';
 	
 	if(name == "hnefatafl"){
-		//the 5 white pawns on each side
-		for(i = 0; i < 5; i++){
-			map[midLineVer - 2 + i][0] = 'W'; //top
-			map[midLineVer - 2 + i][nRow-1] = 'W'; //bot
-			map[0][midLineHor -2 + i] = 'W'; //left
-			map[nCol-1][midLineHor -2 + i] = 'W'; //right
-		}
-		// the remaining white one with them
-		map[midLineVer][1] = 'W';
-		map[midLineVer][nRow-2] = 'W';
-		map[1][midLineHor] = 'W';
-		map[nCol-2][midLineHor] = 'W';
+		
+		this.setExtBlack(5);
+		// the remaining black one with them
+		this.map[this.midLineVer][1] = 'B';
+		this.map[this.midLineVer][nRow-2] = 'B';
+		this.map[1][this.midLineHor] = 'B';
+		this.map[nCol-2][this.midLineHor] = 'B';
 		
 		
-		// the black pawns in 2 lines wich intersect at the king
-		for(i =-2; i < 3; i++){
+		// the white pawns in 2 lines wich intersect at the king
+		for(var i =-2; i < 3; i++){
 			if(i != 0){
-				map[midLineVer][midLineHor + i] = 'B';
-				map[midLineVer +i][midLineHor] = 'B';
+				this.map[this.midLineVer][this.midLineHor + i] = 'W';
+				this.map[this.midLineVer +i][this.midLineHor] = 'W';
 			}
 		}
-		// the remaining black ones next to them.
-		for(i = -1; i < 2; i++){
+		// the remaining white ones next to them.
+		for(var i = -1; i < 2; i++){
 			if(i != 0){
-				map[midLineVer + i][midLineHor -1] = 'B';
-				map[midLineVer + i][midLineHor +1] = 'B';
+				this.map[this.midLineVer + i][this.midLineHor -1] = 'W';
+				this.map[this.midLineVer + i][this.midLineHor +1] = 'W';
 			}
 		}
 		
 	}
 	
 	else if(name == "tablut"){
-		//the 3 white pawns on each side
-		for(i = 0; i < 3; i++){
-			map[midLineVer - 1 + i][0] = 'W'; //top
-			map[midLineVer - 1 + i][nRow-1] = 'W'; //bot
-			map[0][midLineHor -1 + i] = 'W'; //left
-			map[nCol-1][midLineHor -1 + i] = 'W'; //right
-		}
-		// the remaining white one with them
-		map[midLineVer][1] = 'W';
-		map[midLineVer][nRow-2] = 'W';
-		map[1][midLineHor] = 'W';
-		map[nCol-2][midLineHor] = 'W';
+		this.setExtBlack(3);
+		// the remaining black one with them
+		this.map[this.midLineVer][1] = 'B';
+		this.map[this.midLineVer][nRow-2] = 'B';
+		this.map[1][this.midLineHor] = 'B';
+		this.map[nCol-2][this.midLineHor] = 'B';
 		
-		// the black pawns in 2 lines wich intersect at the king
-		for(i =-2; i < 3; i++){
+		// the white pawns in 2 lines wich intersect at the king
+		for(var i =-2; i < 3; i++){
 			if(i != 0){
-				map[midLineVer][midLineHor + i] = 'B';
-				map[midLineVer +i][midLineHor] = 'B';
+				this.map[this.midLineVer][this.midLineHor + i] = 'W';
+				this.map[this.midLineVer +i][this.midLineHor] = 'W';
 			}
 		}
 		
+	}
+	
+	else if(name == "ard-ri"){
+		
+		this.setExtBlack(3);
+		// the remaining black one with them
+		this.map[this.midLineVer][1] = 'B';
+		this.map[this.midLineVer][nRow-2] = 'B';
+		this.map[1][this.midLineHor] = 'B';
+		this.map[nCol-2][this.midLineHor] = 'B';
+		
+		for(var i =-1; i < 2; i++){
+			for(var j = -1; j<2; j++){
+				if((i != 0) || (j != 0)){
+					this.map[this.midLineVer + i][this.midLineHor + j] = 'W';
+				}
+			}
+		}
 	}
 
 }
 
 Maps.prototype.getMap = function(){
-	return map;
+	return this.map;
 }
 
+// sets the black pawns on each side of the board
+Maps.prototype.setExtBlack = function(n){
+	for(var i = 0; i < n; i++){
+		this.map[this.midLineVer - ((n-1)/2) + i][0] = 'B'; //top
+		this.map[this.midLineVer - ((n-1)/2) + i][nRow-1] = 'B'; //bot
+		this.map[0][this.midLineHor -((n-1)/2) + i] = 'B'; //left
+		this.map[nCol-1][this.midLineHor -((n-1)/2) + i] = 'B'; //right
+	}
+}
+
+// create an array with n arrays
 function createArray(n){
 	var array = new Array();
-	for(i = 0; i < n; i++){
+	for(var i = 0; i < n; i++){
 		array[i] = new Array();
 	}
 	
