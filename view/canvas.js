@@ -16,18 +16,29 @@ function init(){
 	canHeight = document.getElementById('canvas').height;
 	
 	board = new Image();
+	board.onload = function(){
+
+		bPawn = new Image();
+		bPawn.onload = function() {
+	
+			wPawn = new Image();
+			wPawn.onload = function() {
+			
+				kPawn = new Image();
+				kPawn.onload = function() {
+					map = new Maps(mapName,nRow,nCol).getMap();
+					draw();
+				}
+				kPawn.src = '../resources/kPawn.png';
+
+			}
+			wPawn.src = '../resources/wPawn.png';
+		
+		}
+		bPawn.src = '../resources/bPawn.png';
+	};
+	
 	board.src = '../resources/board.png';
-	bPawn = new Image();
-	bPawn.src = '../resources/bPawn.png';
-	wPawn = new Image();
-	wPawn.src = '../resources/wPawn.png';
-	kPawn = new Image();
-	kPawn.src = '../resources/kPawn.png';
-	
-	map = new Maps(mapName,nRow,nCol).getMap();
-	
-	draw();
-	
 }
 
 // function used to draw the game
@@ -38,38 +49,33 @@ function draw() {
 
 // draw the board
 function drawBackground(){
-
 	var iWidth = board.width,
-		iHeight = board.heigth;
+	iHeight = board.heigth;
 	
+	ctx.drawImage(board, 0, 0, canWidth, canHeight);
+
+	var bigger;
+	if(nCol > nRow) bigger = nCol;
+	else bigger = nRow;
 	
-		ctx.drawImage(board, 0, 0, canWidth, canHeight);
-	  
-		var bigger;
-		if(nCol > nRow) bigger = nCol;
-		else bigger = nRow;
+	for(i = 0; i<bigger; i++){
 		
-		for(var i = 0; i<bigger; i++){
-			
-			// draw the vertical lines
-			ctx.beginPath();
-			ctx.moveTo(i*(canWidth/nCol), 0);
-			ctx.lineTo(i*(canWidth/nCol), canHeight);
-			ctx.stroke();
-
-			// draw the horizontal lines
-			ctx.beginPath();
-			ctx.moveTo(0, i*(canHeight/nRow));
-			ctx.lineTo(canWidth, i*(canHeight/nRow));
-			ctx.stroke();
-
-		}
-	
+		// draw the vertical lines
+		ctx.beginPath();
+		ctx.moveTo(i*(canWidth/nCol), 0);
+		ctx.lineTo(i*(canWidth/nCol), canHeight);
+		ctx.stroke();
+		
+		// draw the horizontal lines
+		ctx.beginPath();
+		ctx.moveTo(0, i*(canHeight/nRow));
+		ctx.lineTo(canWidth, i*(canHeight/nRow));
+		ctx.stroke();
+	}
 }
 
 // draw the pawns by type
 function drawPawns(){
-	
 	for(var i = 0; i< nCol; i++){
 		for(var j = 0; j<nRow; j++){
 			switch(map[i][j]){
