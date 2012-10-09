@@ -5,8 +5,8 @@ var board;
 var bPawn, wPawn, kPawn;
 
 var map;
-var nRow = 7, nCol = 7;
-var mapName = "ard-ri";
+var nRow = 11, nCol = 11;
+var mapName = "tawlbwrdd";
 
 		
 // load the images and set the basic variables

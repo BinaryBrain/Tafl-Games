@@ -72,6 +72,56 @@ function Maps(name, nRow, nCol){
 			}
 		}
 	}
+	
+	else if(name == "brandubh"){
+		this.setExtBlack(1);
+		// the remaining black one with them
+		this.map[this.midLineVer][1] = 'B';
+		this.map[this.midLineVer][nRow-2] = 'B';
+		this.map[1][this.midLineHor] = 'B';
+		this.map[nCol-2][this.midLineHor] = 'B';
+		
+		// the white pawns in 2 lines wich intersect at the king
+		for(var i =-1; i < 2; i++){
+			if(i != 0){
+				this.map[this.midLineVer][this.midLineHor + i] = 'W';
+				this.map[this.midLineVer +i][this.midLineHor] = 'W';
+			}
+		}
+	}	
+	
+	else if(name == "tawlbwrdd"){
+		this.setExtBlack(3);
+		//the two black pawns next to the 3
+		for(var i = -1; i < 2; i++){
+			if(i != 0){
+				this.map[this.midLineVer - + i][1] = 'B'; //top
+				this.map[this.midLineVer -  + i][nRow-2] = 'B'; //bot
+				this.map[1][this.midLineHor - + i] = 'B'; //left
+				this.map[nCol-2][this.midLineHor - + i] = 'B'; //right
+			}
+		}
+		// the remaining black one with them
+		this.map[this.midLineVer][2] = 'B';
+		this.map[this.midLineVer][nRow-3] = 'B';
+		this.map[2][this.midLineHor] = 'B';
+		this.map[nCol-3][this.midLineHor] = 'B';
+		
+		// the white pawns in 2 lines wich intersect at the king
+		for(var i =-2; i < 3; i++){
+			if(i != 0){
+				this.map[this.midLineVer][this.midLineHor + i] = 'W';
+				this.map[this.midLineVer +i][this.midLineHor] = 'W';
+			}
+		}
+		// the remaining white ones next to them.
+		for(var i = -1; i < 2; i++){
+			if(i != 0){
+				this.map[this.midLineVer + i][this.midLineHor -1] = 'W';
+				this.map[this.midLineVer + i][this.midLineHor +1] = 'W';
+			}
+		}
+	}
 
 }
 
