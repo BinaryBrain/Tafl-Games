@@ -5,8 +5,8 @@ var board;
 var bPawn, wPawn, kPawn;
 
 var map;
-var nRow = 11, nCol = 11;
-var mapName = "tawlbwrdd";
+var nRow = 19, nCol = 19;
+var mapName = "alea-evangeli";
 
 		
 // load the images and set the basic variables
@@ -49,8 +49,6 @@ function draw() {
 
 // draw the board
 function drawBackground(){
-	var iWidth = board.width,
-	iHeight = board.heigth;
 	
 	ctx.drawImage(board, 0, 0, canWidth, canHeight);
 

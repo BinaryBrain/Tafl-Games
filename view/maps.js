@@ -121,6 +121,50 @@ function Maps(name, nRow, nCol){
 				this.map[this.midLineVer + i][this.midLineHor +1] = 'W';
 			}
 		}
+
+	}
+	
+	else if(name == "alea-evangeli"){
+		
+		// white pawns on center
+		for(var i = 0; i < 4; i++){
+			this.setSpacedPawns('W',this.midLineVer -3 + i,this.midLineHor+i,4-i,2,'h');
+			this.setSpacedPawns('W',this.midLineVer -3 + i,this.midLineHor-i,4-i,2,'h');
+		}
+		// white pawns on the sides
+		this.setSpacedPawns('W',this.midLineVer -5,this.midLineHor+1,2,10,'h');
+		this.setSpacedPawns('W',this.midLineVer -5,this.midLineHor-1,2,10,'h');
+		
+		//white pawns ont top and bot
+		this.setSpacedPawns('W',this.midLineVer -1,this.midLineHor+5,2,2,'h');
+		this.setSpacedPawns('W',this.midLineVer -1,this.midLineHor-5,2,2,'h');
+		
+		// blacks pawns on center
+		for(var i = 0; i < 5; i++){
+			this.setSpacedPawns('B',this.midLineVer -6 + i,this.midLineHor+i+2,2,12-(2*i),'h');
+			this.setSpacedPawns('B',this.midLineVer -6 + i,this.midLineHor-i-2,2,12-(2*i),'h');
+		}
+		// black pawns on the midLines
+		this.setSpacedPawns('B',this.midLineVer -6,this.midLineHor,2,12,'h');
+		this.setSpacedPawns('B',this.midLineVer,this.midLineHor-6,2,12,'v');
+		
+		//black pawns in the corners
+		//top left
+		this.setSpacedPawns('B',2,0,2,3,'h');
+		this.setSpacedPawns('B',0,2,2,5,'h');
+		this.setSpacedPawns('B',0,5,2,2,'h');
+		//top right
+		this.setSpacedPawns('B',nCol-6,0,2,3,'h');
+		this.setSpacedPawns('B',nCol-6,2,2,5,'h');
+		this.setSpacedPawns('B',nCol-3,5,2,2,'h');
+		//bot left
+		this.setSpacedPawns('B',2,nRow-1,2,3,'h');
+		this.setSpacedPawns('B',0,nRow-3,2,5,'h');
+		this.setSpacedPawns('B',0,nRow-6,2,2,'h');
+		//bot right
+		this.setSpacedPawns('B',nCol-6,nRow-1,2,3,'h');
+		this.setSpacedPawns('B',nCol-6,nRow-3,2,5,'h');
+		this.setSpacedPawns('B',nCol-3,nRow-6,2,2,'h');
 	}
 
 }
@@ -136,6 +180,19 @@ Maps.prototype.setExtBlack = function(n){
 		this.map[this.midLineVer - ((n-1)/2) + i][nRow-1] = 'B'; //bot
 		this.map[0][this.midLineHor -((n-1)/2) + i] = 'B'; //left
 		this.map[nCol-1][this.midLineHor -((n-1)/2) + i] = 'B'; //right
+	}
+}
+
+Maps.prototype.setSpacedPawns = function(type,beginX,beginY,nPawns,spaceLength,dir){
+	if(dir == 'h'){
+		for(var i =0; i < spaceLength*nPawns; i+=spaceLength){
+			this.map[beginX+i][beginY] = type;	
+		}
+	}
+	else if(dir == 'v'){
+		for(var i =0; i < spaceLength*nPawns; i+=spaceLength){
+			this.map[beginX][beginY+i] = type;	
+		}
 	}
 }
 
