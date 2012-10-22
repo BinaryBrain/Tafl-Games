@@ -94,3 +94,24 @@ function drawPawns(){
 		}
 	}
 }
+
+function getCoords(event){
+	draw();
+	
+	pos_x = event.offsetX?(event.offsetX):event.pageX-document.getElementById("canvas").offsetLeft;
+	pos_y = event.offsetY?(event.offsetY):event.pageY-document.getElementById("canvas").offsetTop;
+	
+	ctx.lineWidth = 3;
+	ctx.strokeRect(getBorder(pos_x,canWidth,nCol),getBorder(pos_y,canHeight,nRow),canWidth/nCol,canHeight/nRow);
+	ctx.lineWidth = 1;
+}
+
+function getBorder(pos,dim,div){
+	var result;
+	for(var i = 0; i<div;i++){
+		if(pos >= i*(dim/div) && pos < (i+1)*(dim/div)){
+			result = i*(dim/div);
+		}
+	}
+	return result;
+}
