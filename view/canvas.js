@@ -5,8 +5,8 @@ var board;
 var bPawn, wPawn, kPawn;
 
 var map;
-var nRow = 19, nCol = 19;
-var mapName = "alea-evangeli";
+var nRow = 11, nCol = 11;
+var mapName = "hnefatafl";
 
 		
 // load the images and set the basic variables
@@ -17,10 +17,10 @@ function init(){
 	
 	board = new Image();
 	board.onload = function(){
-
+	
 		bPawn = new Image();
 		bPawn.onload = function() {
-	
+		
 			wPawn = new Image();
 			wPawn.onload = function() {
 			
@@ -30,15 +30,15 @@ function init(){
 					draw();
 				}
 				kPawn.src = '../resources/kPawn.png';
-
+				
 			}
-			wPawn.src = '../resources/wPawn.png';
-		
+			wPawn.src = '../resources/wPawn.png';	
+			
 		}
 		bPawn.src = '../resources/bPawn.png';
 	};
 	
-	board.src = '../resources/board.png';
+	board.src	= '../resources/board.png';
 }
 
 // function used to draw the game
@@ -106,6 +106,37 @@ function getCoords(event){
 	ctx.lineWidth = 1;
 }
 
+function drawSelectSquare(event){
+	draw();
+	
+	//get the coordinates of the clicked point
+	var pos_x = event.offsetX?(event.offsetX):event.pageX-document.getElementById("canvas").offsetLeft;
+	var pos_y = event.offsetY?(event.offsetY):event.pageY-document.getElementById("canvas").offsetTop;
+	
+	var borderX = getBorder(pos_x,canWidth,nCol);
+	var borderY = getBorder(pos_y,canHeight,nRow);
+	
+	//draw the selection square
+	ctx.lineWidth = 3;
+	ctx.strokeStyle = '#1e90ff';
+	ctx.strokeRect(borderX,borderY,canWidth/nCol,canHeight/nRow);
+	
+	// draw the disabled positions
+	//todo transparence
+	ctx.fillStyle = "rgba(0,0,0,0.5)";
+	for(var i = 0; i< nCol;i++){
+		for(var j = 0; j<nRow;j++){
+			if(i*(canWidth/nCol) != borderX && j*(canHeight/nRow) != borderY){
+				ctx.fillRect(i*(canWidth/nCol),j*(canHeight/nRow),canWidth/nCol,canHeight/nRow);
+			}
+		}
+	}
+	
+	ctx.lineWidth = 1;
+	ctx.strokeStyle = '#000000';
+}
+
+// gets the border of the relative square
 function getBorder(pos,dim,div){
 	var result;
 	for(var i = 0; i<div;i++){
