@@ -11,6 +11,7 @@ var mapName = "hnefatafl";
 		
 // load the images and set the basic variables
 function init(){
+
 	ctx = document.getElementById('canvas').getContext('2d');
 	canWidth = document.getElementById('canvas').width,
 	canHeight = document.getElementById('canvas').height;
@@ -113,35 +114,36 @@ function drawSelectSquare(event){
 	var pos_x = event.offsetX?(event.offsetX):event.pageX-document.getElementById("canvas").offsetLeft;
 	var pos_y = event.offsetY?(event.offsetY):event.pageY-document.getElementById("canvas").offsetTop;
 	
-	var borderX = getBorder(pos_x,canWidth,nCol);
-	var borderY = getBorder(pos_y,canHeight,nRow);
+	var col = getSquareCoord(pos_x,canWidth,nCol);
+	var row = getSquareCoord(pos_y,canHeight,nRow);
 	
-	//draw the selection square
-	ctx.lineWidth = 3;
-	ctx.strokeStyle = '#1e90ff';
-	ctx.strokeRect(borderX,borderY,canWidth/nCol,canHeight/nRow);
-	
-	// draw the disabled positions
-	//todo transparence
-	ctx.fillStyle = "rgba(0,0,0,0.5)";
-	for(var i = 0; i< nCol;i++){
-		for(var j = 0; j<nRow;j++){
-			if(i*(canWidth/nCol) != borderX && j*(canHeight/nRow) != borderY){
-				ctx.fillRect(i*(canWidth/nCol),j*(canHeight/nRow),canWidth/nCol,canHeight/nRow);
+	if(map[col][row] !== undefined){
+		//draw the selection square
+		ctx.lineWidth = 3;
+		ctx.strokeStyle = '#1e90ff';
+		ctx.strokeRect(col*(canWidth/nCol),row*(canHeight/nRow),canWidth/nCol,canHeight/nRow);
+		
+		// draw the disabled positions
+		ctx.fillStyle = "rgba(0,0,0,0.5)";
+		for(var i = 0; i< nCol;i++){
+			for(var j = 0; j<nRow;j++){
+				if(i != col && j != row){
+					ctx.fillRect(i*(canWidth/nCol),j*(canHeight/nRow),canWidth/nCol,canHeight/nRow);
+				}
 			}
 		}
+		
+		ctx.lineWidth = 1;
+		ctx.strokeStyle = '#000000';
 	}
-	
-	ctx.lineWidth = 1;
-	ctx.strokeStyle = '#000000';
 }
 
 // gets the border of the relative square
-function getBorder(pos,dim,div){
+function getSquareCoord(pos,dim,div){
 	var result;
 	for(var i = 0; i<div;i++){
 		if(pos >= i*(dim/div) && pos < (i+1)*(dim/div)){
-			result = i*(dim/div);
+			result = i;
 		}
 	}
 	return result;
