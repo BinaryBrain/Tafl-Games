@@ -8,6 +8,9 @@ var map;
 var nRow = 11, nCol = 11;
 var mapName = "hnefatafl";
 
+var rowSelected, colSelected;
+var isSelected = false;
+
 		
 // load the images and set the basic variables
 function init(){
@@ -107,7 +110,7 @@ function getCoords(event){
 	ctx.lineWidth = 1;
 }
 
-function drawSelectSquare(event){
+function drawSelection(event){
 	draw();
 	
 	//get the coordinates of the clicked point
@@ -117,11 +120,13 @@ function drawSelectSquare(event){
 	var col = getSquareCoord(pos_x,canWidth,nCol);
 	var row = getSquareCoord(pos_y,canHeight,nRow);
 	
-	if(map[col][row] !== undefined){
+	if(map[col][row] !== '.'){
 		//draw the selection square
 		ctx.lineWidth = 3;
 		ctx.strokeStyle = '#1e90ff';
 		ctx.strokeRect(col*(canWidth/nCol),row*(canHeight/nRow),canWidth/nCol,canHeight/nRow);
+		colSelected = col;
+		rowSelected = row;
 		
 		// draw the disabled positions
 		ctx.fillStyle = "rgba(0,0,0,0.5)";
@@ -135,6 +140,13 @@ function drawSelectSquare(event){
 		
 		ctx.lineWidth = 1;
 		ctx.strokeStyle = '#000000';
+	}
+	
+	else if(map[col][row] === '.' && (col === colSelected || row === rowSelected)){
+		map[col][row] = map[colSelected][rowSelected];
+		map[colSelected][rowSelected] = '.';
+		
+		draw();
 	}
 }
 

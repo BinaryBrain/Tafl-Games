@@ -1,10 +1,7 @@
 
 function Maps(name, nRow, nCol){
-	var bigger;
-	if(nCol > nRow) bigger = nCol;
-	else bigger = nRow;
 		
-	this.map = createArray(bigger);
+	this.map = createArray();
 	this.midLineHor = (nRow - 1)/2; 
 	this.midLineVer = (nCol - 1)/2;
 
@@ -197,10 +194,16 @@ Maps.prototype.setSpacedPawns = function(type,beginX,beginY,nPawns,spaceLength,d
 }
 
 // create an array with n arrays
-function createArray(n){
+function createArray(){
 	var array = new Array();
-	for(var i = 0; i < n; i++){
+	for(var i = 0; i < nCol; i++){
 		array[i] = new Array();
+	}
+	
+	for(var i = 0; i < nCol; i++){
+		for(var j = 0; j < nRow; j++){
+			array[i][j] = '.';
+		}
 	}
 	
 	return array;

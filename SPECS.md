@@ -15,3 +15,8 @@ Client->Server
 --------------
 play: 		Dès qu'un joueur effectue une action quelconque (précisée par datagram.type)
 set-name:	Quand un joueur a choisi son nom de joueur. params: { name: "Nom" }
+
+
+PLAY TYPE
+----
+move:		Le mouvement d'un pion d'une case à une autre. params:{ beginCoordinates, endCoordinates}
