@@ -9,4 +9,7 @@ socket.on('connect', function () {
     
     return false;
   })
+
+  socket.on('error', function(err) { alert(err.type) })
+  socket.on('welcome', function(data) { alert("Bienvenue!") })
 });

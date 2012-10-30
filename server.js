@@ -42,7 +42,6 @@ app.get('/*', function(req, res) {
 io.sockets.on('connection', function (socket) {
   // FIXME: Index cannot be a string
   clients[socket.id] = socket
-  printInfo("clients.length: "+socket.id, "#FFFF00", "Nick")
   
   printInfo("New connection:\n  ID: "+socket.id+"\n  IP: "+socket.handshake.address.address + ":" + socket.handshake.address.port)
   
@@ -151,11 +150,13 @@ function nickUsed(nick) {
 }
 
 function nickDefined(id) {
+  var ret = false
   clients[id].get('name', function (err, name) {
     if(err) throw err
     
-    return !!name
+    ret = !!name
   })
+  return ret;
 }
 
 function validNick(name) {
