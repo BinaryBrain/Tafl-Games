@@ -2,18 +2,27 @@
   <head>
 	<meta charset="UTF-8">
     <title>Canvas</title>
-    <link rel="icon" type="image/png" href="resources/kPawn.png" />
+    <link rel="icon" type="image/png" href="resources/kPawn.png">
+    <link rel="stylesheet" type="text/css" href="interface.css">
     <script src="/socket.io/socket.io.js"></script>
     <script src="../resources/libs/jquery.js"></script>
     <script src="interface.js"></script>
   </head>
   <body>
     <div style="width: 300px; margin: auto; margin-top: 200px;">
-    <h1>Tafl Login</h1>
-      <form id="set-name">
-        <input id="name" type="text" required>
-        <input type="submit">
-      </form>
+      <div id="login" class="ui-block login">
+        <h1>Tafl Login</h1>
+        <form id="set-name">
+          <input id="name" type="text" required>
+          <input type="submit">
+        </form>
+      </div>
+        
+      <div id="players" class="ui-block main">
+        <h1>Players</h1>
+        <ul>
+        </ul>
+      </div>
     </div>
   </body>
 </html>

@@ -130,6 +130,7 @@ io.sockets.on('connection', function (socket) {
   
   socket.on('disconnect', function() {
     delete clients[socket.id]
+    // TODO: Delete from players[]
     printInfo(socket.id+" disconnected")
   })
 })
