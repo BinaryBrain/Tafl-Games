@@ -3,7 +3,7 @@ function Player(id, name) {
 	this.name = name
 }
 
-Player.prototype.play(cb) {
+Player.prototype.play = function (cb) {
 	console.log("Player "+this.id+" have to play.")
 	var moved = false
 	while(!moved) {
@@ -16,7 +16,7 @@ Player.prototype.play(cb) {
 	cb()
 }
 
-Player.prototype.waitForChoice(cb) {
+Player.prototype.waitForChoice = function (cb) {
 	console.log("Waiting for the choice of player "+this.id+"...")
 	// Player choose a pawn
 	// Player move it to a dest

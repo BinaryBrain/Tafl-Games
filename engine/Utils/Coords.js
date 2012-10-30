@@ -3,7 +3,7 @@ function Coords(x, y) {
 	this.y = y
 }
 
-Coords.prototype.isValid() {
+Coords.prototype.isValid = function () {
 	var board = Game.board
 	return (x > 0 && y > 0 && x < board.length && y < board[x].length)
 }

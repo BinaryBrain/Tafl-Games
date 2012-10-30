@@ -1,42 +1,44 @@
-Game = {
-	board: [][],
-	players: [],
-	pawns: [],
-	turn: 0,
-	
-	init: function() {
-		console.log("Initializing the game...")
-		
-		players.push(new Player(1,	"Player 1"))
-		players.push(new Player(2,	"Player 2"))
-	},
-	
-	load: function(presetID) {
-		console.log("Loading game n° "+presetID+"...")
-		
-		var preset = Presets.load(presetID)
-		// Transform the .map to a [][]
-	},
-	
-	launch: function() {
-		console.log("Launching the game...")
-		nextTurn()
-	},
+var Logic = require("./Logic");
+var Pawn = require("./Pawn");
+var Player = require("./Player");
+var Presets = require("./Presets");
+var Coords = require("./Utils/Coords");
 
-	nextTurn: function() {
-		console.log("Next turn.")
-		if(Logic.checkEnd()) {
-			this.end()
-		}
-		else {
-			if(turn++ >= players.length)
-				turn = 0
-			player[turn].play(this.nextTurn)
-		}
-	},
+function Game(players) {
+	this.board = []
+	this.players = players
+	this.pawns = []
+	this.turn = 0
+}
 
-	end: function() {
-		console.log("End of the game.")
-		
-	},
-};
+Game.prototype.init = function () {
+	console.log("Initializing the game...")
+}
+
+Game.prototype.load = function (presetID) {
+	console.log("Loading preset n° "+presetID+"...")
+	
+	var preset = Presets.load(presetID)
+	// Transform the .map to a [][]
+}
+
+Game.prototype.launch = function () {
+	console.log("Launching the game...")
+	this.nextTurn()
+}
+
+Game.prototype.nextTurn = function () {
+	console.log("Next turn.")
+	if(Logic.checkEnd()) {
+		this.end()
+	}
+	else {
+		if(this.turn++ >= this.players.length)
+			this.turn = 0
+		this.player[this.turn].play(this.nextTurn)
+	}
+}
+
+Game.prototype.end = function () {
+	console.log("End of the game.")
+}
