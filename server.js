@@ -8,7 +8,7 @@ var server = http.createServer(app)
 
 var io = require('socket.io').listen(server)
 var clients = {}
-var players = []
+var players = {}
 var groups  = []
 var games   = []
 
@@ -58,7 +58,7 @@ io.sockets.on('connection', function (socket) {
     else if(nickDefined(pid))
       socket.emit('error', { type: "ERROR_NICKNAME_CANNOT_BE_CHANGED" })
     else {
-      players.push({ pid: pid, name: name })
+      players[pid] = { pid: pid, name: name }
       socket.emit('welcome', { players: players, groups: groups })
       socket.broadcast.emit('new-player', { pid: pid, name: name })
 
@@ -122,7 +122,7 @@ io.sockets.on('connection', function (socket) {
         })
         
         socket.on('disconnect', function() {
-          socket.broadcast.emit('lost-player', socket.id)
+          socket.broadcast.emit('lost-player', { pid: socket.id })
         })
       })
     }
@@ -130,7 +130,7 @@ io.sockets.on('connection', function (socket) {
   
   socket.on('disconnect', function() {
     delete clients[socket.id]
-    // TODO: Delete from players[]
+    delete players[socket.id]
     printInfo(socket.id+" disconnected")
   })
 })

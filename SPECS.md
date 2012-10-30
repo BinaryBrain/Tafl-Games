@@ -4,8 +4,8 @@ Server->Client
 --------------
 brodcasted
 
-`new-player`:		Un nouveau joueur s'est connecté
-`lost-player`:		Un joueur s'est déconnecté
+`new-player`:		Un nouveau joueur s'est connecté. params: `{ pid: pid, name: name }`
+`lost-player`:		Un joueur s'est déconnecté. params: `{ pid: pid }`
 `new-group`:		Un nouveau groupe est créer. params: `{ players: [leaderID, pid], gid: gid }`
 `add-to-group`:		Un nouveau groupe est créer. params: `{ player: pid, gid: gid }`
 

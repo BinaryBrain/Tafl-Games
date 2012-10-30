@@ -1,4 +1,8 @@
 var socket = io.connect('http://localhost');
+
+var players = {}
+var groups = []
+
 socket.on('connect', function () {
   console.log("Emitting...")
 
@@ -11,9 +15,23 @@ socket.on('connect', function () {
   })
   
   socket.on('error', function(err) { alert(err.type) })
+  
   socket.on('welcome', function(data) {
     setUI("main")
-    refreshPlayers(data.players, data.groups)
+    
+    players = data.players
+    groups = data.groups
+    refreshPlayers(players, groups)
+  })
+
+  socket.on('new-player', function(data) {
+    players[data.pid] = { pid: data.pid, name: data.name }
+    refreshPlayers(players, groups)
+  })
+  
+  socket.on('lost-player', function(data) {
+    delete players[data.pid]
+    refreshPlayers(players, groups)
   })
 });
 
@@ -24,11 +42,16 @@ function setUI(style) {
 }
 
 function refreshPlayers(players, groups) {
-  var html = "";
-
-  players.sort(sortPlayers)
+  var html = ""
+  var playersArr = []
   
-  players.forEach(function(player) {
+  for(var i in players) {
+    playersArr.push(players[i])
+  }
+  
+  playersArr.sort(sortPlayers)
+  
+  playersArr.forEach(function(player) {
     html += '<li title="'+player.pid+'">'
     html += player.name
     html += "</li>"
@@ -43,5 +66,3 @@ function sortPlayers(a, b) {
   else
     return 1
 }
-
- 
