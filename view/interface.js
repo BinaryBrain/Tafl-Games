@@ -13,6 +13,10 @@ socket.on('connect', function () {
     
     return false;
   })
+
+  $(".invite-btn").live('click', function() {
+    socket.emit('invite-player', { pid: $(this).attr("data-pid") })
+  })
   
   socket.on('error', function(err) { alert(err.type) })
   
@@ -33,6 +37,11 @@ socket.on('connect', function () {
     delete players[data.pid]
     refreshPlayers(players, groups)
   })
+
+  socket.on('ask-join-group', function(data) {
+    var leader = leader
+    var group = group
+  })
 });
 
 function setUI(style) {
@@ -52,12 +61,13 @@ function refreshPlayers(players, groups) {
   playersArr.sort(sortPlayers)
   
   playersArr.forEach(function(player) {
-    html += '<li title="'+player.pid+'">'
+    html += '<tr><td>'
     html += player.name
-    html += "</li>"
+    html += '</td><td><a href="#invite-'+player.pid+'" data-pid="'+player.pid+'" title="Invite" class="invite-btn">+</a></td>'
+    html += "</tr>"
   })
   
-  $("#players ul").html(html);
+  $("#players table").html(html);
 }
 
 function sortPlayers(a, b) {

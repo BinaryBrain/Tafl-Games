@@ -1,7 +1,22 @@
+* {
+	font-family: Arial;
+}
+
 .ui-block { 
 	display: none;
 }
 
 .login {
 	display: block;
+}
+
+.invite-btn {
+	text-decoration: none;
+	border: 1px solid #aaa;
+	padding: 0 5px;
+	color: black;
+}
+
+.invite-btn:hover {
+	background-color: #ccc
 }

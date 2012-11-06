@@ -61,54 +61,60 @@ io.sockets.on('connection', function (socket) {
       players[pid] = { pid: pid, name: name }
       socket.emit('welcome', { players: players, groups: groups })
       socket.broadcast.emit('new-player', { pid: pid, name: name })
-
+      
       socket.set('name', name, function () {
         printInfo(pid+" has name: "+name)
+        
+        socket.join("general")
+        
         socket.on('invite-player', function (data) {
           var pid = data.pid
-          printInfo(socket.id+" is inviting "+pid)
+          
+          printInfo("Player: "+socket.id+" is inviting: "+pid)
+          
+          var inviter = socket.id
+          var gid = ""
+          
+          if(!isInAGroup(socket.id)) {
+            gid = "group-"+socket.id
+            socket.join(gid)
+            printGroup("Creating a new group: "+gid)
+          }
+          else {
+            gid = getGroupName(socket.id)
+          }
           
           if(clients[pid] === undefined) {
             socket.emit('error', { type: "ERROR_PLAYER_NOT_FOUND" })
             return;
           }
           
-          var leaderID = socket.id
-          
-          socket.get('groupID', function (err, gid) {
-            if(gid === null) {
-              // Create a new group
-              printGroup("Creating a new group. ID: "+gid)
-              
-              gid = groups.push([socket.id])-1
-            }
+          clients[pid].emit('ask-join-group', { inviter: inviter, gid: gid }, function () {
+            printGroup('Asking '+pid+" to join the group: "+gid+" created by: "+inviter)
             
-            clients[pid].emit('ask-join-group', { leader: leaderID, group: gid }, function () {
-              printGroup('Asking '+pid+" to join the group "+gid+" created by "+leaderID)
+            clients[pid].on('accept-group', function () {
+              printGroup(pid+" accepted to join the group: "+gid+" created by: "+inviter)
               
-              socket.on('accept-group', function () {
-                printGroup(pid+" accepted to join the group "+gid+" created by "+leaderID)
-                
-                groups[gid].push(pid)
-                if(groups[gid].length === 2)
-                  socket.broadcast.emit('new-group', { players: [leaderID, pid], gid: gid })
-                else
-                  socket.broadcast.emit('add-to-group', { player: pid, gid: gid })
-              })
+              clients[pid].join(gid)
               
-              socket.on('reject-group', function () {
-                printGroup(pid+" rejected to join the group "+gid+" created by "+leaderID)
-                
-                if(groups[gid].length === 1) {
-                  printGroup("Group "+gid+" has only one player in it. Removing "+gid)
-                  groups.splice(gid, 1)
-                }
-                
-                leader.emit('invite-rejected', { by: pid, group: gid })
-              })
+              printGroup("Size of group: "+gid+" is: "+io.sockets.clients(gid).length)
+              if(io.sockets.clients(gid).length === 2)
+                socket.broadcast.emit('new-group', { players: [inviter, pid], gid: gid })
+              else
+               socket.broadcast.emit('add-to-group', { player: pid, gid: gid })
             })
             
-            //socket.set('groupID', groupID)          
+            // FIXME: N'avait (est-ce toujours le cas?) rien a faire ici. Comportement à réfléchir.
+            clients[pid].on('reject-group', function (data) {
+              printGroup(pid+" rejected to join the group: "+gid)
+              
+              if(io.sockets.clients(gid).length === 1) {
+                printGroup("Group: "+gid+" has only one player in it. Removing it.")
+                socket.leave(gid)
+              }
+              
+              socket.emit('invite-rejected', { by: pid, gid: gid })
+            })
           })
         })
       
@@ -165,13 +171,30 @@ function validNick(name) {
   return pattern.test(name);
 }
 
+function isInAGroup(pid) {
+  var inagroup = false
+  for(var i in io.sockets.manager.roomClients[pid]) {
+    if(i.substr(1, 6) == "group-")
+      inagroup = true
+  }
+  return inagroup
+}
+
+function getGroupName(pid) {
+  if(!isInAGroup(pid)) throw new Exception("PLAYER_NOT_IN_A_GROUP")
+  for(var i in io.sockets.manager.roomClients[pid]) {
+    if(i.substr(1, 6) == "group-")
+      return i.substr(1)
+  }
+}
+
 // COLORFUL PRINTING IS FNU
 function printInfo(s, color, prefix) {
   var ansi = require('ansi')
   var cursor = ansi(process.stdout);
   
   if(!color)
-    color = "#66FF66";
+    color = "#00FF66";
   
   if(!prefix)
     prefix = "TAFL";
