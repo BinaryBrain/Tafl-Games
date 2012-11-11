@@ -2,10 +2,11 @@ var socket = io.connect('http://localhost');
 
 var players = {}
 var groups = []
+var myid = ""
 
 socket.on('connect', function () {
-  console.log("Emitting...")
-
+  myid = socket.socket.sessionid
+  
   $("#set-name").submit(function() {
     var name = $("#set-name #name").val()
     
@@ -27,7 +28,7 @@ socket.on('connect', function () {
     groups = data.groups
     refreshPlayers(players, groups)
   })
-
+  
   socket.on('new-player', function(data) {
     players[data.pid] = { pid: data.pid, name: data.name }
     refreshPlayers(players, groups)
@@ -37,10 +38,13 @@ socket.on('connect', function () {
     delete players[data.pid]
     refreshPlayers(players, groups)
   })
-
+  
   socket.on('ask-join-group', function(data) {
-    var leader = leader
-    var group = group
+    var inviter = data.inviter
+    var gid = data.gid
+
+    var answer = confirm(players[inviter].name+" is inviting you.\nDo you want to join his group?")
+    
   })
 });
 
@@ -61,11 +65,15 @@ function refreshPlayers(players, groups) {
   playersArr.sort(sortPlayers)
   
   playersArr.forEach(function(player) {
+    if(player.pid === myid)
+      return false
     html += '<tr><td>'
     html += player.name
     html += '</td><td><a href="#invite-'+player.pid+'" data-pid="'+player.pid+'" title="Invite" class="invite-btn">+</a></td>'
     html += "</tr>"
   })
+
+  if(html === "") html = "FOREVER ALONE!"
   
   $("#players table").html(html);
 }

@@ -9,7 +9,6 @@ var server = http.createServer(app)
 var io = require('socket.io').listen(server)
 var clients = {}
 var players = {}
-var groups  = []
 var games   = []
 
 var util = require('util')
@@ -59,13 +58,15 @@ io.sockets.on('connection', function (socket) {
       socket.emit('error', { type: "ERROR_NICKNAME_CANNOT_BE_CHANGED" })
     else {
       players[pid] = { pid: pid, name: name }
-      socket.emit('welcome', { players: players, groups: groups })
+      socket.emit('welcome', { players: players, groups: getGroupsArray() })
       socket.broadcast.emit('new-player', { pid: pid, name: name })
       
       socket.set('name', name, function () {
         printInfo(pid+" has name: "+name)
         
         socket.join("general")
+        socket.join("group-sacha")
+        socket.join("group-lol")
         
         socket.on('invite-player', function (data) {
           var pid = data.pid
@@ -86,6 +87,10 @@ io.sockets.on('connection', function (socket) {
           
           if(clients[pid] === undefined) {
             socket.emit('error', { type: "ERROR_PLAYER_NOT_FOUND" })
+            return;
+          }
+          else if(pid === socket.id) {
+            socket.emit('error', { type: "ERROR_CANNOT_INVITE_YOURSELF" })
             return;
           }
           
@@ -171,21 +176,53 @@ function validNick(name) {
   return pattern.test(name);
 }
 
+// Group Helper
+
+function isAGroup(name) {
+  return name.substr(1, 6) === "group-"
+}
+
 function isInAGroup(pid) {
   var inagroup = false
   for(var i in io.sockets.manager.roomClients[pid]) {
-    if(i.substr(1, 6) == "group-")
+    if(isAGroup(i))
       inagroup = true
   }
   return inagroup
 }
 
 function getGroupName(pid) {
-  if(!isInAGroup(pid)) throw new Exception("PLAYER_NOT_IN_A_GROUP")
+  if(!isInAGroup(pid)) throw new Exception("ERROR_PLAYER_NOT_IN_A_GROUP")
+
   for(var i in io.sockets.manager.roomClients[pid]) {
-    if(i.substr(1, 6) == "group-")
+    if(isAGroup(i))
       return i.substr(1)
   }
+}
+
+function roomsGroupsToArray() {
+  var groups = []
+  
+  for(var i in io.sockets.manager.rooms) {
+    if(isAGroup(i))
+      groups.push(i.substr(1))
+  }
+
+  return groups
+}
+
+function getGroupsArray() {
+  var groups = {}
+  
+  var rooms = roomsGroupsToArray()
+  rooms.forEach(function(room) {
+    groups[room] = []
+    io.sockets.clients(room).forEach(function(player) {
+      groups[room].push(player.id)
+    })
+  })
+
+  return groups
 }
 
 // COLORFUL PRINTING IS FNU
@@ -201,6 +238,7 @@ function printInfo(s, color, prefix) {
   
   cursor.hex(color)
   console.log("-- "+prefix+" -- "+s)
+  console.log(s)
   cursor.reset()
 }
 
