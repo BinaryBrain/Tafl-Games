@@ -10,13 +10,18 @@
 	display: block;
 }
 
-.invite-btn {
+#players	td a.btn {
 	text-decoration: none;
 	border: 1px solid #aaa;
 	padding: 0 5px;
 	color: black;
 }
 
-.invite-btn:hover {
+#players	td a.btn.disable {
+	cursor: default;
+	background-color: #888;
+}
+
+.btn:hover {
 	background-color: #ccc
 }

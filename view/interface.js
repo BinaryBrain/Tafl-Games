@@ -15,8 +15,9 @@ socket.on('connect', function () {
     return false;
   })
 
-  $(".invite-btn").live('click', function () {
+  $(".invite-btn:not(.disable)").live('click', function () {
     socket.emit('invite-player', { pid: $(this).attr("data-pid") })
+    console.log($(this).attr("data-pid"))
   })
   
   socket.on('error', function (err) { alert(err.type) })
@@ -26,17 +27,17 @@ socket.on('connect', function () {
     
     players = data.players
     groups = data.groups
-    refreshPlayers(players, groups)
+    refreshPlayers()
   })
   
   socket.on('new-player', function (data) {
     players[data.pid] = { pid: data.pid, name: data.name }
-    refreshPlayers(players, groups)
+    refreshPlayers()
   })
   
   socket.on('lost-player', function (data) {
     delete players[data.pid]
-    refreshPlayers(players, groups)
+    refreshPlayers()
   })
   
   socket.on('ask-join-group', function (data) {
@@ -50,17 +51,15 @@ socket.on('connect', function () {
       socket.emit('reject-group', { gid: gid })
     }
   })
-
+  
   socket.on('new-group', function (data) {
-    console.log(data.players, " | ", data.gid)
     groups[data.gid] = data.players
-    console.log(groups)
+    refreshPlayers()
   })
   
   socket.on('add-to-group', function (data) {
-    console.log(data.player, " | ", data.gid)
     groups[data.gid].push(data.player)
-    console.log(groups)
+    refreshPlayers()
   })
 });
 
@@ -70,7 +69,7 @@ function setUI(style) {
   })
 }
 
-function refreshPlayers(players, groups) {
+function refreshPlayers() {
   var html = ""
   var playersArr = []
   
@@ -85,7 +84,8 @@ function refreshPlayers(players, groups) {
       return false
     html += '<tr><td>'
     html += player.name
-    html += '</td><td><a href="#invite-'+player.pid+'" data-pid="'+player.pid+'" title="Invite" class="invite-btn">+</a></td>'
+    html += '</td>'
+    html += '<td><a href="#invite-'+player.pid+'" data-pid="'+player.pid+'" title="Invite" class="btn invite-btn'+((isInAGroup(player.pid)) ? ' disable"' : '"') +'>+</a></td>'
     html += "</tr>"
   })
 
@@ -99,4 +99,16 @@ function sortPlayers(a, b) {
     return -1
   else
     return 1
+}
+
+function isInAGroup(pid) {
+  var result = false
+  for(var i in groups) {
+    groups[i].forEach(function (player) {
+      if(player === pid)
+        result = true
+    })
+  }
+  
+  return result
 }
