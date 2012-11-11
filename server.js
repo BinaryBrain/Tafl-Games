@@ -65,13 +65,24 @@ io.sockets.on('connection', function (socket) {
         printInfo(pid+" has name: "+name)
         
         socket.join("general")
-        socket.join("group-sacha")
-        socket.join("group-lol")
         
         socket.on('invite-player', function (data) {
           var pid = data.pid
           
-          printInfo("Player: "+socket.id+" is inviting: "+pid)
+          printGroup("Player: "+socket.id+" is inviting: "+pid)
+          
+          if(clients[pid] === undefined) {
+            socket.emit('error', { type: "ERROR_PLAYER_NOT_FOUND" })
+            return
+          }
+          else if(pid === socket.id) {
+            socket.emit('error', { type: "ERROR_CANNOT_INVITE_YOURSELF" })
+            return
+          }
+          else if(isInAGroup(pid)) {
+            socket.emit('error', { type: "ERROR_PLAYER_ALREADY_IN_A_GROUP" })
+            return
+          }
           
           var inviter = socket.id
           var gid = ""
@@ -85,41 +96,31 @@ io.sockets.on('connection', function (socket) {
             gid = getGroupName(socket.id)
           }
           
-          if(clients[pid] === undefined) {
-            socket.emit('error', { type: "ERROR_PLAYER_NOT_FOUND" })
-            return;
-          }
-          else if(pid === socket.id) {
-            socket.emit('error', { type: "ERROR_CANNOT_INVITE_YOURSELF" })
-            return;
-          }
+          clients[pid].emit('ask-join-group', { inviter: inviter, gid: gid })
+          printGroup('Asking '+pid+" to join the group: "+gid+" created by: "+inviter)
           
-          clients[pid].emit('ask-join-group', { inviter: inviter, gid: gid }, function () {
-            printGroup('Asking '+pid+" to join the group: "+gid+" created by: "+inviter)
+          clients[pid].on('accept-group', function () {
+            printGroup(pid+" accepted to join the group: "+gid+" created by: "+inviter)
             
-            clients[pid].on('accept-group', function () {
-              printGroup(pid+" accepted to join the group: "+gid+" created by: "+inviter)
-              
-              clients[pid].join(gid)
-              
-              printGroup("Size of group: "+gid+" is: "+io.sockets.clients(gid).length)
-              if(io.sockets.clients(gid).length === 2)
-                socket.broadcast.emit('new-group', { players: [inviter, pid], gid: gid })
-              else
-               socket.broadcast.emit('add-to-group', { player: pid, gid: gid })
-            })
+            clients[pid].join(gid)
             
-            // FIXME: N'avait (est-ce toujours le cas?) rien a faire ici. Comportement à réfléchir.
-            clients[pid].on('reject-group', function (data) {
-              printGroup(pid+" rejected to join the group: "+gid)
-              
-              if(io.sockets.clients(gid).length === 1) {
-                printGroup("Group: "+gid+" has only one player in it. Removing it.")
-                socket.leave(gid)
-              }
-              
-              socket.emit('invite-rejected', { by: pid, gid: gid })
-            })
+            printGroup("Size of group: "+gid+" is: "+io.sockets.clients(gid).length)
+            if(io.sockets.clients(gid).length === 2)
+              socket.broadcast.emit('new-group', { players: [inviter, pid], gid: gid })
+            else
+             socket.broadcast.emit('add-to-group', { player: pid, gid: gid })
+          })
+          
+          // FIXME: N'avait (est-ce toujours le cas?) rien a faire ici. Comportement à réfléchir.
+          clients[pid].on('reject-group', function (data) {
+            printGroup(pid+" rejected to join the group: "+gid)
+            
+            if(io.sockets.clients(gid).length === 1) {
+              printGroup("The group: "+gid+" has only one player in it. Removing it.")
+              socket.leave(gid)
+            }
+            
+            socket.emit('invite-rejected', { by: pid, gid: gid })
           })
         })
       
@@ -132,14 +133,14 @@ io.sockets.on('connection', function (socket) {
           })
         })
         
-        socket.on('disconnect', function() {
+        socket.on('disconnect', function () {
           socket.broadcast.emit('lost-player', { pid: socket.id })
         })
       })
     }
   })
   
-  socket.on('disconnect', function() {
+  socket.on('disconnect', function () {
     delete clients[socket.id]
     delete players[socket.id]
     printInfo(socket.id+" disconnected")
@@ -238,10 +239,9 @@ function printInfo(s, color, prefix) {
   
   cursor.hex(color)
   console.log("-- "+prefix+" -- "+s)
-  console.log(s)
   cursor.reset()
 }
 
 function printGroup(s) {
-  printInfo(s, "00FF00", "Group")
+  printInfo(s, "00FF00", "Groups")
 }

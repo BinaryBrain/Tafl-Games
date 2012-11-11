@@ -7,7 +7,7 @@ var myid = ""
 socket.on('connect', function () {
   myid = socket.socket.sessionid
   
-  $("#set-name").submit(function() {
+  $("#set-name").submit(function () {
     var name = $("#set-name #name").val()
     
     socket.emit('set-name', { name: name })
@@ -15,13 +15,13 @@ socket.on('connect', function () {
     return false;
   })
 
-  $(".invite-btn").live('click', function() {
+  $(".invite-btn").live('click', function () {
     socket.emit('invite-player', { pid: $(this).attr("data-pid") })
   })
   
-  socket.on('error', function(err) { alert(err.type) })
+  socket.on('error', function (err) { alert(err.type) })
   
-  socket.on('welcome', function(data) {
+  socket.on('welcome', function (data) {
     setUI("main")
     
     players = data.players
@@ -29,27 +29,31 @@ socket.on('connect', function () {
     refreshPlayers(players, groups)
   })
   
-  socket.on('new-player', function(data) {
+  socket.on('new-player', function (data) {
     players[data.pid] = { pid: data.pid, name: data.name }
     refreshPlayers(players, groups)
   })
   
-  socket.on('lost-player', function(data) {
+  socket.on('lost-player', function (data) {
     delete players[data.pid]
     refreshPlayers(players, groups)
   })
   
-  socket.on('ask-join-group', function(data) {
+  socket.on('ask-join-group', function (data) {
     var inviter = data.inviter
     var gid = data.gid
-
-    var answer = confirm(players[inviter].name+" is inviting you.\nDo you want to join his group?")
     
+    if(confirm(players[inviter].name+" is inviting you.\nDo you want to join his group?")) {
+      socket.emit('accept-group', { gid: gid })
+    }
+    else {
+      socket.emit('reject-group', { gid: gid })
+    }
   })
 });
 
 function setUI(style) {
-  $(".ui-block:not(."+style+")").fadeOut(400, function() {
+  $(".ui-block:not(."+style+")").fadeOut(400, function () {
     $("."+style).fadeIn()
   })
 }
@@ -64,7 +68,7 @@ function refreshPlayers(players, groups) {
   
   playersArr.sort(sortPlayers)
   
-  playersArr.forEach(function(player) {
+  playersArr.forEach(function (player) {
     if(player.pid === myid)
       return false
     html += '<tr><td>'
