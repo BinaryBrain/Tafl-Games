@@ -106,9 +106,9 @@ io.sockets.on('connection', function (socket) {
             
             printGroup("Size of group: "+gid+" is: "+io.sockets.clients(gid).length)
             if(io.sockets.clients(gid).length === 2)
-              socket.broadcast.emit('new-group', { players: [inviter, pid], gid: gid })
+              io.sockets.emit('new-group', { players: [inviter, pid], gid: gid })
             else
-             socket.broadcast.emit('add-to-group', { player: pid, gid: gid })
+              io.sockets.emit('add-to-group', { player: pid, gid: gid })
           })
           
           // FIXME: N'avait (est-ce toujours le cas?) rien a faire ici. Comportement à réfléchir.

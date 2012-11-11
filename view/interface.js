@@ -50,6 +50,18 @@ socket.on('connect', function () {
       socket.emit('reject-group', { gid: gid })
     }
   })
+
+  socket.on('new-group', function (data) {
+    console.log(data.players, " | ", data.gid)
+    groups[data.gid] = data.players
+    console.log(groups)
+  })
+  
+  socket.on('add-to-group', function (data) {
+    console.log(data.player, " | ", data.gid)
+    groups[data.gid].push(data.player)
+    console.log(groups)
+  })
 });
 
 function setUI(style) {

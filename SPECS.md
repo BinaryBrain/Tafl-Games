@@ -4,7 +4,7 @@
 
 `new-player`:		Un nouveau joueur s'est connecté. params: `{ pid: pid, name: name }`  
 `lost-player`:		Un joueur s'est déconnecté. params: `{ pid: pid }`  
-`new-group`:		Un nouveau groupe est créer. params: `{ players: [leaderID, pid], gid: gid }`  
+`new-group`:		Un nouveau groupe est créer. params: `{ players: [pid1, pid2], gid: gid }`  
 `add-to-group`:		Un nouveau groupe est créer. params: `{ player: pid, gid: gid }`  
 
 ### Unicasted
