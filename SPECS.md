@@ -11,7 +11,7 @@
 `play`:			Le joueur a effecté un mouvement  
 `welcome`:		L'entrée du joueur s'est bien passée. On affiche l'interface. params: `{ players: [{ id, name }], groups: [[id1, id2], [id5, id4]] }`  
 `ask-join-group`:	On propose au joueur de rejoindre un groupe. params: `{ leader: leader, gid: gid }`  
-`invite-rejected`:	Le joueur a refusé de rentrer dans le groupe. params: `{ by: pid, gid: gid }`  
+`invite-rejected`:	Le joueur a refusé de rentrer dans le groupe. params: `{ pid: pid, gid: gid }`  
 
 ### Misc
 `error`:		Envoie une erreur au joueur (mouvement impossible, etc.). params: `{ type: "ERROR" }`  
@@ -20,10 +20,8 @@
 ## Client -> Server
 `play`: 		Dès qu'un joueur effectue une action quelconque (précisée par `datagram.type`)  
 `set-name`:		Le joueur a choisi son nom de joueur. params: `{ name: "Nom" }`  
-`new-game`:		Le joueur lance une partie  
+`new-game`:		Le joueur lance une partie `{ ... }`  
 `invite-player`:	Un joueur invite un autre joueur dans son groupe. params: `{ pid: pid }`  
-`accept-group`:		Le joueur accept de rentrer dans un groupe. params: `{ gid: gid }`  
-`reject-group`:		Le joueur refuse de rentrer dans un groupe. params: `{ gid: gid }`  
-
-## Play Type
-`move`:		Le mouvement d'un pion d'une case à une autre. params: `{ beginCoordinates, endCoordinates }`  
+`accept-group`:		Le joueur accept de rentrer dans un groupe. params: `{ gid: gid, inviter: inviter }`  
+`reject-group`:		Le joueur refuse de rentrer dans un groupe. params: `{ gid: gid, inviter: inviter }`  
+`leave-group`:		Le joueur quitte le groupe dans lequel il est. params: `none`  

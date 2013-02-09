@@ -17,7 +17,6 @@ socket.on('connect', function () {
 
   $(".invite-btn:not(.disable)").live('click', function () {
     socket.emit('invite-player', { pid: $(this).attr("data-pid") })
-    console.log($(this).attr("data-pid"))
   })
   
   socket.on('error', function (err) { alert(err.type) })
@@ -45,10 +44,10 @@ socket.on('connect', function () {
     var gid = data.gid
     
     if(confirm(players[inviter].name+" is inviting you.\nDo you want to join his group?")) {
-      socket.emit('accept-group', { gid: gid })
+      socket.emit('accept-group', { gid: gid, inviter: inviter })
     }
     else {
-      socket.emit('reject-group', { gid: gid })
+      socket.emit('reject-group', { gid: gid, inviter: inviter })
     }
   })
   
@@ -60,6 +59,10 @@ socket.on('connect', function () {
   socket.on('add-to-group', function (data) {
     groups[data.gid].push(data.player)
     refreshPlayers()
+  })
+  
+  socket.on('invite-rejected', function (data) {
+    alert("Invite rejected by "+players[data.pid].name)
   })
 });
 

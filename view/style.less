@@ -1,0 +1,171 @@
+/* IMPORTS */
+@import url("http://fonts.googleapis.com/css?family=Cantarell|Open+Sans");
+
+/* CONSTANTS */
+
+@lightGrey: #eee;
+@grey: #999;
+@darkGrey: #222;
+
+@frameWidth: 800px;
+@frameHeight: 500px;
+@frameBG: rgba(0, 0, 0, 0.5);
+
+@gameWidth: 320px;
+@gameHeight: 200px;
+
+@peopleWidth: 250px;
+
+@popoverBG: @lightGrey;
+@popoverWidth: @frameWidth;
+
+* {
+  padding: 0;
+  margin: 0;
+  border: 0;
+}
+
+html, body {
+  width: 100%;
+  height: 100%;
+  font-family: Arial;
+  font-family: 'Cantarell', sans-serif;
+  //font-family: 'Open Sans', sans-serif;
+}
+
+body {
+  background: url("./img/7.jpg");
+  background-size: cover;
+}
+
+#games {
+  position: absolute;
+  
+  width: @frameWidth;
+  height: @frameHeight;
+  
+  left: 50%;
+  top: 50%;
+  
+  margin-left: -@frameWidth/2;
+  margin-top: -@frameHeight/2;
+  
+  background: @frameBG;
+  
+  .game {
+    position: relative;
+    
+    width: @gameWidth;
+    height: @gameHeight;
+    
+    margin-left: (@frameWidth - @gameWidth*2)/3;
+    margin-top: (@frameHeight - @gameHeight*2)/3;
+    
+    border: 1px solid black;
+    
+    float: left;
+    
+    h3 {
+      position: absolute;
+      
+      left: 8px;
+      top: 5px;
+      
+      .whiteTitle;
+    }
+    
+    img {
+      width: 100%;
+      height: 100%;
+    }
+  }
+}
+
+#people {
+  position: absolute;
+  
+  top: 0;
+  bottom: 0;
+  right: 0;
+  
+  width: @peopleWidth;
+  
+  background: @frameBG;
+  
+  h3 {
+    width: 100%;
+    text-align: center;
+    
+    .whiteTitle;
+    
+    margin: 10px 0 5px 0;
+    
+    
+  }
+  
+  ul {
+    list-style-type: none;
+    color: @lightGrey;
+    
+    li {
+      padding-left: 10px;
+      display: block;
+      padding-bottom: 7px;
+      padding-top: 7px;
+      border-bottom: 1px solid black;
+      
+      cursor: pointer;
+      
+      &:hover {
+        background: @frameBG;
+      }
+    }
+  }
+}
+
+.popover {
+  position: absolute;
+  
+  top: 0;
+  bottom: 0;
+  left: 0;
+  right: 0;
+  
+  z-index: 1000;
+  
+  background-color: rgba(0, 0, 0, 0.75);
+  
+  .popover-frame {
+    position: absolute;
+    
+    top: 200px;
+    bottom: 200px;
+    left: 50%;
+    
+    width: @popoverWidth;
+    margin-left: -@popoverWidth/2;
+    
+    background-color: @popoverBG;
+    
+    .title {
+      width: 100%;
+      height: 50px;
+      
+      background-color: @darkGrey;
+      .whiteTitle;
+      
+      > * {
+        padding: 10px;
+      }
+    }
+
+    .content {
+      padding: 10px;
+    }
+  }
+}
+
+.whiteTitle {
+  color: white;
+  text-shadow: 2px 2px rgba(0, 0, 0, 0.5);
+}
