@@ -17,7 +17,14 @@
 @peopleWidth: 250px;
 
 @popoverBG: @lightGrey;
-@popoverWidth: @frameWidth;
+@popoverWidth: @frameWidth+100;
+
+.transition (@type: all, @dur: 0.5s, @trans: ease-in-out, @delay: 0s) {
+  transition: @type @dur @trans @delay;
+  -webkit-transition: @type @dur @trans @delay;
+  -moz-transition: @type @dur @trans @delay;
+  -o-transition: @type @dur @trans @delay;
+}
 
 * {
   padding: 0;
@@ -36,6 +43,19 @@ html, body {
 body {
   background: url("./img/7.jpg");
   background-size: cover;
+}
+
+h1#bigTitle {
+  .whiteTitle;
+  font-size: 3em;
+  letter-spacing: 2px;
+  
+  position: absolute;
+  left: 0;
+  right: 0;
+  top: 50px;
+  
+  text-align: center;
 }
 
 #games {
@@ -65,6 +85,10 @@ body {
     
     float: left;
     
+    overflow: hidden;
+    
+    cursor: pointer;
+    
     h3 {
       position: absolute;
       
@@ -76,6 +100,35 @@ body {
     
     img {
       width: 100%;
+      height: 100%;
+    }
+    
+    .info {
+      position: absolute;
+      
+      bottom: 0;
+      left: 0;
+      right: 0;
+      
+      background: @frameBG;
+      
+      ul {
+        font-size: 0.8em;
+        padding-left: 5px;
+        list-style-type: none;
+        color: @lightGrey;
+        
+        height: 0%;
+        overflow: hidden;
+      }
+      
+      /*.hidden {
+        .transition;
+        height: 0%;
+      }*/
+    }
+    
+    &:hover .info .hidden {
       height: 100%;
     }
   }
@@ -108,6 +161,7 @@ body {
     color: @lightGrey;
     
     li {
+      .transition;
       padding-left: 10px;
       display: block;
       padding-bottom: 7px;
@@ -138,8 +192,8 @@ body {
   .popover-frame {
     position: absolute;
     
-    top: 200px;
-    bottom: 200px;
+    top: 150px;
+    bottom: 150px;
     left: 50%;
     
     width: @popoverWidth;

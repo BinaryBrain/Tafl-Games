@@ -6,10 +6,6 @@ Socket.io
 
 - If a player is invited into 2 groups, he shouldn't be able to join both.
 
-Interface
----------
-
-- Metro/Play Store style?
 
 Games
 -----
