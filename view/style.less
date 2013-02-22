@@ -6,6 +6,7 @@
 @lightGrey: #eee;
 @grey: #999;
 @darkGrey: #222;
+@blue: #3775E6;
 
 @frameWidth: 800px;
 @frameHeight: 500px;
@@ -13,6 +14,7 @@
 
 @gameWidth: 320px;
 @gameHeight: 200px;
+@gameInfoBG: rgba(0, 0, 0, 0.85);
 
 @peopleWidth: 250px;
 
@@ -38,11 +40,17 @@ html, body {
   font-family: Arial;
   font-family: 'Cantarell', sans-serif;
   //font-family: 'Open Sans', sans-serif;
+  color: @lightGrey;
 }
 
 body {
   background: url("./img/7.jpg");
   background-size: cover;
+}
+
+a {
+  text-decoration: none;
+  color: @lightGrey;
 }
 
 h1#bigTitle {
@@ -58,7 +66,7 @@ h1#bigTitle {
   text-align: center;
 }
 
-#games {
+.frame {
   position: absolute;
   
   width: @frameWidth;
@@ -71,6 +79,10 @@ h1#bigTitle {
   margin-top: -@frameHeight/2;
   
   background: @frameBG;
+}
+
+#games {
+  .frame;
   
   .game {
     position: relative;
@@ -90,10 +102,13 @@ h1#bigTitle {
     cursor: pointer;
     
     h3 {
+      z-index: 100;
       position: absolute;
       
       left: 8px;
       top: 5px;
+      
+      height: 30px;
       
       .whiteTitle;
     }
@@ -106,30 +121,32 @@ h1#bigTitle {
     .info {
       position: absolute;
       
+      top: 0;
       bottom: 0;
-      left: 0;
-      right: 0;
+      right: -100%;
       
-      background: @frameBG;
+      width: 100%;
+      
+      background: @gameInfoBG;
+      
+      overflow: hidden;
+      
+      .transition(right);
       
       ul {
+        margin: 5px;
+        margin-top: 35px;
+        
         font-size: 0.8em;
         padding-left: 5px;
         list-style-type: none;
-        color: @lightGrey;
-        
-        height: 0%;
-        overflow: hidden;
       }
-      
-      /*.hidden {
-        .transition;
-        height: 0%;
-      }*/
     }
     
-    &:hover .info .hidden {
-      height: 100%;
+    &:hover {
+      .info {
+        right: 0;
+      }
     }
   }
 }
@@ -158,7 +175,6 @@ h1#bigTitle {
   
   ul {
     list-style-type: none;
-    color: @lightGrey;
     
     li {
       .transition;
@@ -188,6 +204,8 @@ h1#bigTitle {
   z-index: 1000;
   
   background-color: rgba(0, 0, 0, 0.75);
+  
+  color: black;
   
   .popover-frame {
     position: absolute;
@@ -219,7 +237,79 @@ h1#bigTitle {
   }
 }
 
+#teamMaking {
+  .frame;
+  
+  #teams {
+    position: absolute;
+    top: 10px;
+    bottom: 70px;
+    left: 10px;
+    right: 10px;
+    
+    .team {
+      //height: 100%;
+      
+      float: left;
+      
+      .padding {
+        padding: 10px;
+        
+        h3 {
+          .whiteTitle;
+        }
+        
+        .slot {
+          padding: 10px 5px;
+          margin-top: 20px;
+          
+          border: 2px solid @lightGrey;
+          
+          background: @frameBG;
+          
+          &.open {
+            border-style: dashed;
+            
+            &:before {
+              content: "Open";
+            }
+          }
+        }
+      }
+      
+      &:not(:first-child) {
+        border-left: 1px @lightGrey solid;
+      }
+    }
+  }
+    
+  #readyButton {
+    .button;
+    position: absolute;
+    
+    bottom: 20px;
+    right: 20px;
+    
+    
+  }
+}
+
 .whiteTitle {
   color: white;
   text-shadow: 2px 2px rgba(0, 0, 0, 0.5);
+}
+
+.button {
+  background-color: @blue;
+  padding: 5px 20px;
+  border: 1px solid @lightGrey;
+  cursor: pointer;
+  
+  &:hover {
+    background-color: darken(@blue, 5%);
+  }
+  
+  &:active {
+    background-color: darken(@blue, 15%);
+  }
 }

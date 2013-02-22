@@ -11,10 +11,15 @@ html, body {
   height: 100%;
   font-family: Arial;
   font-family: 'Cantarell', sans-serif;
+  color: #eeeeee;
 }
 body {
   background: url("./img/7.jpg");
   background-size: cover;
+}
+a {
+  text-decoration: none;
+  color: #eeeeee;
 }
 h1#bigTitle {
   color: white;
@@ -26,6 +31,16 @@ h1#bigTitle {
   right: 0;
   top: 50px;
   text-align: center;
+}
+.frame {
+  position: absolute;
+  width: 800px;
+  height: 500px;
+  left: 50%;
+  top: 50%;
+  margin-left: -400px;
+  margin-top: -250px;
+  background: rgba(0, 0, 0, 0.5);
 }
 #games {
   position: absolute;
@@ -49,9 +64,11 @@ h1#bigTitle {
   cursor: pointer;
 }
 #games .game h3 {
+  z-index: 100;
   position: absolute;
   left: 8px;
   top: 5px;
+  height: 30px;
   color: white;
   text-shadow: 2px 2px rgba(0, 0, 0, 0.5);
 }
@@ -61,26 +78,26 @@ h1#bigTitle {
 }
 #games .game .info {
   position: absolute;
+  top: 0;
   bottom: 0;
-  left: 0;
-  right: 0;
-  background: rgba(0, 0, 0, 0.5);
-  /*.hidden {
-        .transition;
-        height: 0%;
-      }*/
-
+  right: -100%;
+  width: 100%;
+  background: rgba(0, 0, 0, 0.85);
+  overflow: hidden;
+  transition: right 0.5s ease-in-out 0s;
+  -webkit-transition: right 0.5s ease-in-out 0s;
+  -moz-transition: right 0.5s ease-in-out 0s;
+  -o-transition: right 0.5s ease-in-out 0s;
 }
 #games .game .info ul {
+  margin: 5px;
+  margin-top: 35px;
   font-size: 0.8em;
   padding-left: 5px;
   list-style-type: none;
-  color: #eeeeee;
-  height: 0%;
-  overflow: hidden;
 }
-#games .game:hover .info .hidden {
-  height: 100%;
+#games .game:hover .info {
+  right: 0;
 }
 #people {
   position: absolute;
@@ -99,7 +116,6 @@ h1#bigTitle {
 }
 #people ul {
   list-style-type: none;
-  color: #eeeeee;
 }
 #people ul li {
   transition: all 0.5s ease-in-out 0s;
@@ -124,6 +140,7 @@ h1#bigTitle {
   right: 0;
   z-index: 1000;
   background-color: rgba(0, 0, 0, 0.75);
+  color: black;
 }
 .popover .popover-frame {
   position: absolute;
@@ -147,7 +164,76 @@ h1#bigTitle {
 .popover .popover-frame .content {
   padding: 10px;
 }
+#teamMaking {
+  position: absolute;
+  width: 800px;
+  height: 500px;
+  left: 50%;
+  top: 50%;
+  margin-left: -400px;
+  margin-top: -250px;
+  background: rgba(0, 0, 0, 0.5);
+}
+#teamMaking #teams {
+  position: absolute;
+  top: 10px;
+  bottom: 70px;
+  left: 10px;
+  right: 10px;
+}
+#teamMaking #teams .team {
+  float: left;
+}
+#teamMaking #teams .team .padding {
+  padding: 10px;
+}
+#teamMaking #teams .team .padding h3 {
+  color: white;
+  text-shadow: 2px 2px rgba(0, 0, 0, 0.5);
+}
+#teamMaking #teams .team .padding .slot {
+  padding: 10px 5px;
+  margin-top: 20px;
+  border: 2px solid #eeeeee;
+  background: rgba(0, 0, 0, 0.5);
+}
+#teamMaking #teams .team .padding .slot.open {
+  border-style: dashed;
+}
+#teamMaking #teams .team .padding .slot.open:before {
+  content: "Open";
+}
+#teamMaking #teams .team:not(:first-child) {
+  border-left: 1px #eeeeee solid;
+}
+#teamMaking #readyButton {
+  background-color: #3775e6;
+  padding: 5px 20px;
+  border: 1px solid #eeeeee;
+  cursor: pointer;
+  position: absolute;
+  bottom: 20px;
+  right: 20px;
+}
+#teamMaking #readyButton:hover {
+  background-color: #2065e3;
+}
+#teamMaking #readyButton:active {
+  background-color: #1751b9;
+}
 .whiteTitle {
   color: white;
   text-shadow: 2px 2px rgba(0, 0, 0, 0.5);
+}
+.button {
+  background-color: #3775e6;
+  padding: 5px 20px;
+  border: 1px solid #eeeeee;
+  cursor: pointer;
+}
+.button:hover {
+  background-color: #2065e3;
+}
+.button:active {
+  background-color: #1751b9;
 }
