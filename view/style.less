@@ -6,7 +6,10 @@
 @lightGrey: #eee;
 @grey: #999;
 @darkGrey: #222;
+
 @blue: #3775E6;
+@yellow: #F1BF28;
+@green: #2DC32E;
 
 @frameWidth: 800px;
 @frameHeight: 500px;
@@ -66,7 +69,7 @@ h1#bigTitle {
   text-align: center;
 }
 
-.frame {
+#frame {
   position: absolute;
   
   width: @frameWidth;
@@ -77,12 +80,16 @@ h1#bigTitle {
   
   margin-left: -@frameWidth/2;
   margin-top: -@frameHeight/2;
-  
+}
+
+.frameContent {
   background: @frameBG;
+  width: 100%;
+  height: 100%;
 }
 
 #games {
-  .frame;
+  .frameContent;
   
   .game {
     position: relative;
@@ -148,6 +155,75 @@ h1#bigTitle {
         right: 0;
       }
     }
+  }
+}
+
+#teamMaking {
+  .frameContent;
+  
+  #teams {
+    position: absolute;
+    top: 10px;
+    bottom: 70px;
+    left: 10px;
+    right: 10px;
+    
+    .team {
+      //height: 100%;
+      
+      float: left;
+      
+      .padding {
+        padding: 10px;
+        
+        h3 {
+          .whiteTitle;
+        }
+        
+        .slot {
+          padding: 10px 5px;
+          margin-top: 20px;
+          
+          border: 2px solid @lightGrey;
+          
+          background: @frameBG;
+          
+          &.open {
+            color: @grey;
+            border-color: @grey;
+            border-style: dashed;
+            
+            &:before {
+              content: "Open";
+            }
+          }
+          
+          &.locked {
+            color: @green;
+            border-color: @green;
+          }
+          
+          &.waiting {
+            color: @yellow;
+            border-color: @yellow;
+          }
+        }
+      }
+      
+      &:not(:first-child) {
+        border-left: 2px @lightGrey solid;
+      }
+    }
+  }
+    
+  #readyButton {
+    .button;
+    position: absolute;
+    
+    bottom: 20px;
+    right: 20px;
+    
+    
   }
 }
 
@@ -234,63 +310,6 @@ h1#bigTitle {
     .content {
       padding: 10px;
     }
-  }
-}
-
-#teamMaking {
-  .frame;
-  
-  #teams {
-    position: absolute;
-    top: 10px;
-    bottom: 70px;
-    left: 10px;
-    right: 10px;
-    
-    .team {
-      //height: 100%;
-      
-      float: left;
-      
-      .padding {
-        padding: 10px;
-        
-        h3 {
-          .whiteTitle;
-        }
-        
-        .slot {
-          padding: 10px 5px;
-          margin-top: 20px;
-          
-          border: 2px solid @lightGrey;
-          
-          background: @frameBG;
-          
-          &.open {
-            border-style: dashed;
-            
-            &:before {
-              content: "Open";
-            }
-          }
-        }
-      }
-      
-      &:not(:first-child) {
-        border-left: 1px @lightGrey solid;
-      }
-    }
-  }
-    
-  #readyButton {
-    .button;
-    position: absolute;
-    
-    bottom: 20px;
-    right: 20px;
-    
-    
   }
 }
 

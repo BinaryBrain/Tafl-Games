@@ -3,7 +3,7 @@
   <head>
     <meta charset="utf-8">
     <title>TAFL</title>
-    <meta name="author" content="Sacha Bron">
+    <meta name="author" content="Sacha Bron (Binary Brain)">
     
     <script src="resources/libs/jquery.js"></script>
     <script src="index.js"></script>
@@ -14,107 +14,26 @@
   <div id="people">
     <h3>Friends</h3>
     <ul id="friends">
-      <li><div class="name" id="1">Flagoul</div></li>
-      <li><div class="name" id="2">Protectator</div></li>
-      <li><div class="name" id="3">Lachainone</div></li>
-      <li><div class="name" id="4">Darkalcoolik</div></li>
+      <li draggable="true"><div class="name" id="1">Flagoul</div></li>
+      <li draggable="true"><div class="name" id="2">Protectator</div></li>
+      <li draggable="true"><div class="name" id="3">Lachainone</div></li>
+      <li draggable="true"><div class="name" id="4">Darkalcoolik</div></li>
     </ul>
     
     <h3>People</h3>
     <ul id="others">
-      <li><div class="name" id="5">Jean-Jean</div></li>
-      <li><div class="name" id="6">xXx Dark sombre xXx</div></li>
-      <li><div class="name" id="8">Tabi Nah</div></li>
-      <li><div class="name" id="7">SuperMool</div></li>
-      <li><div class="name" id="10">Jayce</div></li>
-      <li><div class="name" id="9">Pascal</div></li>
-      <li><div class="name" id="12">octopus82</div></li>
-      <li><div class="name" id="11">Slalutrin</div></li>
-      <li><div class="name" id="13">YuGuiYooo13</div></li>
+      <li draggable="true"><div class="name" id="5">Jean-Jean</div></li>
+      <li draggable="true"><div class="name" id="6">xXx Dark sombre xXx</div></li>
+      <li draggable="true"><div class="name" id="8">Tabi Nah</div></li>
+      <li draggable="true"><div class="name" id="7">SuperMool</div></li>
+      <li draggable="true"><div class="name" id="10">Jayce</div></li>
+      <li draggable="true"><div class="name" id="9">Pascal</div></li>
+      <li draggable="true"><div class="name" id="12">octopus82</div></li>
+      <li draggable="true"><div class="name" id="11">Slalutrin</div></li>
+      <li draggable="true"><div class="name" id="13">YuGuiYooo13</div></li>
     </ul>
   </div>
-  <!--
-  <div id="games">
-    <div id="1" class="game">
-      <h3>Sintel Game</h3>
-      <div class="info">
-        <ul>
-          <li><strong>Type:</strong> Adventure</li>
-          <li><strong>Player1:</strong> 1</li>
-          <li><strong>Duration:</strong> 10 min</li>
-        </ul>
-      </div>
-      <img src="img/1.jpg"></img>
-    </div>
-    <div id="2" class="game">
-      <h3>Minecraft</h3>
-      <div class="info">
-        <ul>
-          <li><strong>Type:</strong> Sandbox</li>
-          <li><strong>Players:</strong> *</li>
-          <li><strong>Duration:</strong> *</li>
-        </ul>
-      </div>
-      <img src="img/2.jpg"></img>
-    </div>
-    <div id="3" class="game">
-      <h3>Portal</h3>
-      <div class="info">
-        <ul>
-          <li><strong>Type:</strong> Adventure</li>
-          <li><strong>Player:</strong> 1</li>
-          <li><strong>Duration:</strong> 25 min</li>
-        </ul>
-      </div>
-      <img src="img/5.jpg"></img>
-    </div>
-    <div id="4" class="game">
-      <h3>League of Legends</h3>
-      <div class="info">
-        <ul>
-          <li><strong>Type:</strong> Moba</li>
-          <li><strong>Players:</strong> 5v5</li>
-          <li><strong>Duration:</strong> 30 min</li>
-        </ul>
-      </div>
-      <img src="img/4.jpg"></img>
-    </div>
-  </div>
-  <!---->
-  <!-- TEAM MAKING (TODO: Ajax it!)-->
-  <div id="teamMaking">
-    <div id="teams">
-      <div class="team" style="width: 33%;">
-        <div class="padding">
-          <h3>Team1</h3>
-          <div class="slot">Binary Brain</div>
-          <div class="slot open"></div>
-          <div class="slot open"></div>
-          <div class="slot open"></div>
-        </div>
-      </div>
-      <div class="team" style="width: 33%;">
-        <div class="padding">
-          <h3>Team2</h3>
-          <div class="slot open"></div>
-          <div class="slot open"></div>
-          <div class="slot open"></div>
-          <div class="slot open"></div>
-        </div>
-      </div>
-      <div class="team" style="width: 33%;">
-        <div class="padding">
-          <h3>Team3</h3>
-          <div class="slot open"></div>
-          <div class="slot open"></div>
-          <div class="slot open"></div>
-          <div class="slot open"></div>
-        </div>
-      </div>
-    </div>
-    <a id="readyButton">Ready!</a>
-  </div>
-  <!-- END TEAM MAKING -->
+  <div id="frame"></div>
   <!--div class="popover">
     <div class="popover-frame">
       <div class="title"><h2>Popover</h2></div>
