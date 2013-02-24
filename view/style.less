@@ -91,6 +91,39 @@ h1#bigTitle {
   height: 100%;
 }
 
+#login {
+  .frameContent;
+  
+  padding: 20px;
+  
+  h2 {
+    .whiteTitle;
+    margin-bottom: 10px;
+  }
+  
+  form {
+  }
+  
+  input {
+    background: @frameBG;
+    color: @lighterGrey;
+    
+    padding: 10px;
+    
+    font-size: 1.2em;
+    
+    width: 30%;
+  }
+  
+  #loginButton {
+    .button;
+    position: absolute;
+    
+    bottom: 0;
+    right: 0;
+  }
+}
+
 #games {
   .frameContent;
   
@@ -226,10 +259,6 @@ h1#bigTitle {
     
     bottom: 20px;
     right: 20px;
-    
-    &:before {
-      content: "Ready!";
-    }
   }
   
   #cancelButton {
@@ -238,10 +267,6 @@ h1#bigTitle {
     
     bottom: 20px;
     left: 20px;
-    
-    &:before {
-      content: "Cancel";
-    }
   }
 }
 

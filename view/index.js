@@ -5,14 +5,18 @@ $(function () {
   
   $("#games .game").live("click", function () {
     console.log($(this).attr("id"))
-    showTeams();
+    showTeams()
+    newNotif("Invite your friends", "Just drag and drop people you want to invite.")
   })
   
-  $("#notifs .close").live("click", function () {
-    var notif = $(this).parent()
-    notif.animate({ left: -500 }, function () {
-      notif.remove()
-    })
+  $("#login #loginButton").live("click", function () {
+    var user = $("#login #user").val()
+    var password = $("#login #password").val()
+    
+    console.log(user, password)
+    showGames()
+    
+    newNotif("Games", "The main frame show you every games you can play on this web site with your friends.")
   })
   
   $("#teamMaking #cancelButton").live("click", function () {
@@ -23,27 +27,59 @@ $(function () {
     alert("Launching the game!")
   })
   
-  showGames()
+  $("#notifs .close").live("click", function () {
+    var notif = $(this).parent()
+    closeNotif(notif)
+  })
+  
+  showLogin()
   welcomeNotifs()
 })
 
+function showLogin() {
+  $.get("/login.html", function (data) {
+      changeFrame(data)
+  })
+}
+
 function showGames() {
   $.get("/games.html", function (data) {
-    $("#frame").html(data)
+      changeFrame(data)
   })
 }
 
 function showTeams() {
   $.get("/teams.html", function (data) {
-    $("#frame").html(data)
+    changeFrame(data)
   })
+}
+
+function changeFrame(data) {
+  if($("#frame").html() !== "") {
+    $("#frame > *").animate({ opacity: 0 }, function () {
+      $("#frame").html(data)
+    })
+  }
+  
+  else
+    $("#frame").html(data)
 }
 
 function newNotif(title, content) {
   var id = Math.floor(Math.random()*10000)+""
   var html = '<div class="notif" id="'+id+'"><div class="close"></div><h3>'+title+'</h3><p>'+content+'</p></div>'
   $("#notifs").append(html)
-  $("#"+id).animate({ left: 0 })
+  $("#notifs #"+id).animate({ left: 0 })
+  
+  setTimeout(function () {
+    closeNotif($("#notifs #"+id))
+  }, 6000)
+}
+
+function closeNotif(notif) {
+  notif.animate({ left: -500 }, function () {
+    notif.remove()
+  })
 }
 
 function welcomeNotifs() {
@@ -52,10 +88,6 @@ function welcomeNotifs() {
   }, 5000)
   
   setTimeout(function () {
-    newNotif("Games", "The main frame show you every games you can play on this web site with your friends.")
-  }, 8000)
-  
-  setTimeout(function () {
     newNotif("Notifications", "Oh! By the way, I'm a notification. You may see me when I will have some informations for you.")
-  }, 13000)
+  }, 7000)
 }
