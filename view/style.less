@@ -3,7 +3,8 @@
 
 /* CONSTANTS */
 
-@lightGrey: #eee;
+@lighterGrey: #eee;
+@lightGrey: #ccc;
 @grey: #999;
 @darkGrey: #222;
 
@@ -20,8 +21,9 @@
 @gameInfoBG: rgba(0, 0, 0, 0.85);
 
 @peopleWidth: 250px;
+@notifsWidth: @peopleWidth;
 
-@popoverBG: @lightGrey;
+@popoverBG: @lighterGrey;
 @popoverWidth: @frameWidth+100;
 
 .transition (@type: all, @dur: 0.5s, @trans: ease-in-out, @delay: 0s) {
@@ -43,7 +45,7 @@ html, body {
   font-family: Arial;
   font-family: 'Cantarell', sans-serif;
   //font-family: 'Open Sans', sans-serif;
-  color: @lightGrey;
+  color: @lighterGrey;
 }
 
 body {
@@ -53,7 +55,7 @@ body {
 
 a {
   text-decoration: none;
-  color: @lightGrey;
+  color: @lighterGrey;
 }
 
 h1#bigTitle {
@@ -184,7 +186,8 @@ h1#bigTitle {
           padding: 10px 5px;
           margin-top: 20px;
           
-          border: 2px solid @lightGrey;
+          border: 2px solid @lighterGrey;
+          margin-left: -2px;
           
           background: @frameBG;
           
@@ -211,19 +214,17 @@ h1#bigTitle {
       }
       
       &:not(:first-child) {
-        border-left: 2px @lightGrey solid;
+        border-left: 2px @lighterGrey solid;
       }
     }
   }
     
   #readyButton {
-    .button;
+    .button(@green);
     position: absolute;
     
     bottom: 20px;
     right: 20px;
-    
-    
   }
 }
 
@@ -265,6 +266,27 @@ h1#bigTitle {
       &:hover {
         background: @frameBG;
       }
+    }
+  }
+}
+
+#notifs {
+  position: absolute;
+  width: @notifsWidth;
+  
+  .notif {
+    position: relative;
+    margin-top: 10px;
+    left: -500px;
+    padding: 5px;
+    
+    background: @frameBG;
+    font-size: 0.8em;
+    
+    overflow: hidden;
+    
+    h3 {
+      margin-bottom: 5px;
     }
   }
 }
@@ -318,17 +340,39 @@ h1#bigTitle {
   text-shadow: 2px 2px rgba(0, 0, 0, 0.5);
 }
 
-.button {
-  background-color: @blue;
+.button(@color: @blue) {
+  background-color: @color;
   padding: 5px 20px;
-  border: 1px solid @lightGrey;
+  border: 1px solid @lighterGrey;
   cursor: pointer;
   
   &:hover {
-    background-color: darken(@blue, 5%);
+    background-color: darken(@color, 5%);
   }
   
   &:active {
-    background-color: darken(@blue, 15%);
+    background-color: darken(@color, 15%);
+  }
+}
+
+.close {
+  position: absolute;
+  top: 1px;
+  right: 4px;
+  
+  font-size: 20px;
+  
+  cursor: pointer;
+  
+  &:after {
+    content: "×";
+  }
+  
+  &:hover {
+    color: @lightGrey;
+  }
+  
+  &:active {
+    color: @grey;
   }
 }

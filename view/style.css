@@ -124,6 +124,7 @@ h1#bigTitle {
   padding: 10px 5px;
   margin-top: 20px;
   border: 2px solid #eeeeee;
+  margin-left: -2px;
   background: rgba(0, 0, 0, 0.5);
 }
 #teamMaking #teams .team .padding .slot.open {
@@ -146,7 +147,7 @@ h1#bigTitle {
   border-left: 2px #eeeeee solid;
 }
 #teamMaking #readyButton {
-  background-color: #3775e6;
+  background-color: #2dc32e;
   padding: 5px 20px;
   border: 1px solid #eeeeee;
   cursor: pointer;
@@ -155,10 +156,10 @@ h1#bigTitle {
   right: 20px;
 }
 #teamMaking #readyButton:hover {
-  background-color: #2065e3;
+  background-color: #28ae29;
 }
 #teamMaking #readyButton:active {
-  background-color: #1751b9;
+  background-color: #1f851f;
 }
 #people {
   position: absolute;
@@ -192,6 +193,22 @@ h1#bigTitle {
 }
 #people ul li:hover {
   background: rgba(0, 0, 0, 0.5);
+}
+#notifs {
+  position: absolute;
+  width: 250px;
+}
+#notifs .notif {
+  position: relative;
+  margin-top: 10px;
+  left: -500px;
+  padding: 5px;
+  background: rgba(0, 0, 0, 0.5);
+  font-size: 0.8em;
+  overflow: hidden;
+}
+#notifs .notif h3 {
+  margin-bottom: 5px;
 }
 .popover {
   position: absolute;
@@ -229,15 +246,19 @@ h1#bigTitle {
   color: white;
   text-shadow: 2px 2px rgba(0, 0, 0, 0.5);
 }
-.button {
-  background-color: #3775e6;
-  padding: 5px 20px;
-  border: 1px solid #eeeeee;
+.close {
+  position: absolute;
+  top: 1px;
+  right: 4px;
+  font-size: 20px;
   cursor: pointer;
 }
-.button:hover {
-  background-color: #2065e3;
+.close:after {
+  content: "×";
 }
-.button:active {
-  background-color: #1751b9;
+.close:hover {
+  color: #cccccc;
+}
+.close:active {
+  color: #999999;
 }
