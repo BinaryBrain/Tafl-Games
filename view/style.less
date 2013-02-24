@@ -11,6 +11,7 @@
 @blue: #3775E6;
 @yellow: #F1BF28;
 @green: #2DC32E;
+@red: #FF2C42;
 
 @frameWidth: 800px;
 @frameHeight: 500px;
@@ -225,6 +226,22 @@ h1#bigTitle {
     
     bottom: 20px;
     right: 20px;
+    
+    &:before {
+      content: "Ready!";
+    }
+  }
+  
+  #cancelButton {
+    .button(@red);
+    position: absolute;
+    
+    bottom: 20px;
+    left: 20px;
+    
+    &:before {
+      content: "Cancel";
+    }
   }
 }
 

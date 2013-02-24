@@ -8,15 +8,19 @@ $(function () {
     showTeams();
   })
   
-  $("#teamMaking #readyButton").live("click", function () {
-    alert("Launching the game!")
-  })
-  
   $("#notifs .close").live("click", function () {
     var notif = $(this).parent()
     notif.animate({ left: -500 }, function () {
       notif.remove()
     })
+  })
+  
+  $("#teamMaking #cancelButton").live("click", function () {
+    showGames()
+  })
+  
+  $("#teamMaking #readyButton").live("click", function () {
+    alert("Launching the game!")
   })
   
   showGames()

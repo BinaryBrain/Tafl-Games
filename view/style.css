@@ -161,6 +161,27 @@ h1#bigTitle {
 #teamMaking #readyButton:active {
   background-color: #1f851f;
 }
+#teamMaking #readyButton:before {
+  content: "Ready!";
+}
+#teamMaking #cancelButton {
+  background-color: #ff2c42;
+  padding: 5px 20px;
+  border: 1px solid #eeeeee;
+  cursor: pointer;
+  position: absolute;
+  bottom: 20px;
+  left: 20px;
+}
+#teamMaking #cancelButton:hover {
+  background-color: #ff132b;
+}
+#teamMaking #cancelButton:active {
+  background-color: #df0017;
+}
+#teamMaking #cancelButton:before {
+  content: "Cancel";
+}
 #people {
   position: absolute;
   top: 0;
