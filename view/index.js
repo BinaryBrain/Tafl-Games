@@ -56,8 +56,10 @@ function showTeams() {
 
 function changeFrame(data) {
   if($("#frame").html() !== "") {
-    $("#frame > *").animate({ opacity: 0 }, function () {
+    $("#frame > *").fadeOut(function () {
       $("#frame").html(data)
+      $("#frame > *").css({ display: "none" })
+      $("#frame > *").fadeIn()
     })
   }
   
