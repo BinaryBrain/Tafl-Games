@@ -226,9 +226,10 @@ h1#bigTitle {
           background: @frameBG;
           
           &.open {
-            color: @grey;
-            border-color: @grey;
+            color: @lightGrey;
+            border-color: @lightGrey;
             border-style: dashed;
+            opacity: 0.7;
             
             &:before {
               content: "Open";
@@ -240,9 +241,13 @@ h1#bigTitle {
             border-color: @green;
           }
           
-          &.waiting {
+          &.pending {
             color: @yellow;
             border-color: @yellow;
+            
+            .canvasloader {
+              float: right;
+            }
           }
         }
       }

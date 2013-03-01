@@ -6,6 +6,7 @@
     <meta name="author" content="Sacha Bron (Binary Brain)">
     
     <script src="resources/libs/jquery.js"></script>
+    <script src="resources/libs/canvasloader.js"></script>
     <script src="index.js"></script>
     <link href="style.css" rel="stylesheet" type="text/css">
 </head>
@@ -15,23 +16,23 @@
   <div id="people">
     <h3>Friends</h3>
     <ul id="friends">
-      <li draggable="true"><div class="name" id="1">Flagoul</div></li>
-      <li draggable="true"><div class="name" id="2">Protectator</div></li>
-      <li draggable="true"><div class="name" id="3">Lachainone</div></li>
-      <li draggable="true"><div class="name" id="4">Darkalcoolik</div></li>
+      <li class="buddy" draggable="true"><div class="name" id="1">Flagoul</div></li>
+      <li class="buddy" draggable="true"><div class="name" id="2">Protectator</div></li>
+      <li class="buddy" draggable="true"><div class="name" id="3">Lachainone</div></li>
+      <li class="buddy" draggable="true"><div class="name" id="4">Darkalcoolik</div></li>
     </ul>
     
     <h3>People</h3>
     <ul id="others">
-      <li draggable="true"><div class="name" id="5">Jean-Jean</div></li>
-      <li draggable="true"><div class="name" id="6">xXx Dark sombre xXx</div></li>
-      <li draggable="true"><div class="name" id="8">Tabi Nah</div></li>
-      <li draggable="true"><div class="name" id="7">SuperMool</div></li>
-      <li draggable="true"><div class="name" id="10">Jayce</div></li>
-      <li draggable="true"><div class="name" id="9">Pascal</div></li>
-      <li draggable="true"><div class="name" id="12">octopus82</div></li>
-      <li draggable="true"><div class="name" id="11">Slalutrin</div></li>
-      <li draggable="true"><div class="name" id="13">YuGuiYooo13</div></li>
+      <li class="buddy" draggable="true"><div class="name" id="5">Jean-Jean</div></li>
+      <li class="buddy" draggable="true"><div class="name" id="6">xXx Dark sombre xXx</div></li>
+      <li class="buddy" draggable="true"><div class="name" id="8">Tabi Nah</div></li>
+      <li class="buddy" draggable="true"><div class="name" id="7">SuperMool</div></li>
+      <li class="buddy" draggable="true"><div class="name" id="10">Jayce</div></li>
+      <li class="buddy" draggable="true"><div class="name" id="9">Pascal</div></li>
+      <li class="buddy" draggable="true"><div class="name" id="12">octopus82</div></li>
+      <li class="buddy" draggable="true"><div class="name" id="11">Slalutrin</div></li>
+      <li class="buddy" draggable="true"><div class="name" id="13">YuGuiYooo13</div></li>
     </ul>
   </div>
   <div id="frame"></div>

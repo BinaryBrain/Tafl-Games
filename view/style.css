@@ -161,9 +161,10 @@ h1#bigTitle {
   background: rgba(0, 0, 0, 0.5);
 }
 #teamMaking #teams .team .padding .slot.open {
-  color: #999999;
-  border-color: #999999;
+  color: #cccccc;
+  border-color: #cccccc;
   border-style: dashed;
+  opacity: 0.7;
 }
 #teamMaking #teams .team .padding .slot.open:before {
   content: "Open";
@@ -172,9 +173,12 @@ h1#bigTitle {
   color: #2dc32e;
   border-color: #2dc32e;
 }
-#teamMaking #teams .team .padding .slot.waiting {
+#teamMaking #teams .team .padding .slot.pending {
   color: #f1bf28;
   border-color: #f1bf28;
+}
+#teamMaking #teams .team .padding .slot.pending .canvasloader {
+  float: right;
 }
 #teamMaking #teams .team:not(:first-child) {
   border-left: 2px #eeeeee solid;

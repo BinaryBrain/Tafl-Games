@@ -32,6 +32,37 @@ $(function () {
     closeNotif(notif)
   })
   
+  var lastSlot = false
+  var lastBuddy
+  
+  $("#people .buddy").live("dragstart", function () {
+    lastBuddy = $(this)
+  })
+  $("#teams .slot.open").live("dragenter", function () {
+    lastSlot = $(this)
+    $(this).animate({ opacity: 1 })
+  })
+  $("#teams .slot.open").live("dragleave", function () {
+    lastSlot = false
+    $(this).animate({ opacity: 0.7 })
+  })
+  $("#people .buddy").live("dragend", function () {
+    if(lastSlot) {
+      lastSlot.addClass("pending")
+      lastSlot.removeClass("open")
+      
+      var id= "canvasloader"+Math.floor(Math.random()*1000000)+""
+      lastSlot.html('<div class="canvasloader" id="'+id+'"></div><div class="name">'+lastBuddy.children(".name").html() + '</div>')
+      
+      var cl = new CanvasLoader(id);
+      cl.setDiameter(15); // default is 40
+      cl.setColor('#F1BF28'); // default is '#000000'
+      cl.setDensity(45); // default is 40
+      cl.setRange(0.3); // default is 1.3
+      cl.show(); // Hidden by default
+    }
+  })
+  
   showLogin()
   welcomeNotifs()
 })
@@ -75,7 +106,7 @@ function newNotif(title, content) {
   
   setTimeout(function () {
     closeNotif($("#notifs #"+id))
-  }, 6000)
+  }, 15000)
 }
 
 function closeNotif(notif) {
